@@ -10,29 +10,25 @@ namespace DataBase.Configurations
         public void Configure(EntityTypeBuilder<Post> builder)
         {
             builder.HasKey(post => post.Id);
-            builder.HasIndex(post => new { post.Id, post.UserId });
+
             builder.Property(user => user.Content).IsRequired();
             builder.HasOne(post => post.User)
                 .WithMany(user => user.Posts)
                 .HasForeignKey(post => post.UserId)
-                .OnDelete(DeleteBehavior.NoAction);
-            //тут
+                .OnDelete(DeleteBehavior.SetNull);
             builder.HasMany(post => post.Comments)
                 .WithOne(comment => comment.Post)
                 .HasForeignKey(comment => comment.PostId)
-                .OnDelete(DeleteBehavior.NoAction);
-
+                .OnDelete(DeleteBehavior.SetNull);
             builder.HasMany(post => post.Tags)
                 .WithMany(tag => tag.Posts)
                 .UsingEntity<PostTag>(
                    postTag => postTag.HasOne(postTag => postTag.Tag)
                         .WithMany(post => post.PostTags)
-                        .HasForeignKey(userBook => userBook.TagId)
-                        .OnDelete(DeleteBehavior.NoAction),
+                        .HasForeignKey(userBook => userBook.TagId),
                     postTag => postTag.HasOne(postTag => postTag.Post)
                         .WithMany(post => post.PostTags)
                         .HasForeignKey(userBook => userBook.PostId)
-                        .OnDelete(DeleteBehavior.NoAction)
                 );
             builder.Property(post => post.CreationDate).IsRequired();
         }

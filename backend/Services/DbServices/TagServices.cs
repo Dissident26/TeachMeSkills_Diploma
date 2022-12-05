@@ -2,7 +2,6 @@
 
 using DataBase.Contexts;
 using Models.Entities;
-using Models.Extentions;
 using Services.Interfaces;
 using Services.Exceptions;
 
