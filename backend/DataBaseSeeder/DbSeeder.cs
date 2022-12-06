@@ -2,27 +2,26 @@
 using DataBaseSeeder.Fakers;
 
 using Services.DbServices;
+using Services.Dtos;
 
 namespace DataBaseSeeder
 {
     public class DbSeeder
     {
         private readonly DbContextMain _dbContext;
-        //private readonly FakeComment _comment = new FakeComment();
         public DbSeeder(DbContextMain context)
         {
             _dbContext = context;
         }
 
-        
-        public async Task Seed()
+        public async Task Seed(int numberOfPosts)
         {
-            int numberOfPosts = 100;
-
             var usersIds = await SeedUsers(100);
             var tagsIds = await SeedTags(50);
             var postsIds = await SeedPosts(numberOfPosts, usersIds);
             await SeedPostTags(numberOfPosts, postsIds, tagsIds);
+            var comments = await SeedComments(500, usersIds, postsIds);
+            await SeedRepliedComments(500, comments, usersIds);
         }
         private async Task<int[]> SeedUsers(int amount)
         {
@@ -61,6 +60,24 @@ namespace DataBaseSeeder
 
             var postTagServices = new PostTagServices(_dbContext);
             await postTagServices.Create(postTags);
+        }
+        private async Task<CommentDto[]> SeedComments(int amount, int[] usersIds, int[] postIds)
+        {
+            FakeComment fakeCommentModel = new FakeComment(usersIds, postIds);
+            var comments = fakeCommentModel.Generate(amount);
+
+            var commentsServices = new CommentServices(_dbContext);
+            var createdComments = await commentsServices.Create(comments);
+
+            return createdComments.ToArray();
+        }
+        private async Task SeedRepliedComments(int amount, CommentDto[] comments, int[] userIds)
+        {
+            FakeComment fakeCommentModel = new FakeComment(comments, userIds);
+            var repliedComments = fakeCommentModel.Generate(amount);
+
+            var commentsServices = new CommentServices(_dbContext);
+            var createdComments = await commentsServices.Create(repliedComments);
         }
     }
 }
