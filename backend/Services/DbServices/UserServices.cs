@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 using DataBase.Contexts;
-using Models.Entities;
-using Models.Extentions;
+using Services.Dtos;
 using Services.Interfaces;
 using Services.Exceptions;
 
@@ -16,35 +15,38 @@ namespace Services.DbServices
             _dbContext = context;
         }
 
-        public async Task<User> Create(User model)
+        public async Task<UserDto> Create(UserDto model)
         {
-            await _dbContext.Users.AddAsync(model);
+            await _dbContext.Users.AddAsync(model.MapToEntity());
             await _dbContext.SaveChangesAsync();
 
             return model;
         }
 
-        public async Task<List<User>> Create(List<User> models)
+        public async Task<List<UserDto>> Create(List<UserDto> models)
         {
-            await _dbContext.Users.AddRangeAsync(models);
+            var mappedModels = models.Select(model => model.MapToEntity());
+            await _dbContext.Users.AddRangeAsync(mappedModels);
             await _dbContext.SaveChangesAsync();
 
-            var addedUsers = await _dbContext.Users.AsNoTracking().ToListAsync();
+            var addedUsers = await _dbContext.Users.AsNoTracking()
+                .Select(user => new UserDto(user))
+                .ToListAsync();
 
             return addedUsers;
         }
 
-        public async Task<User> Delete(int id)
+        public async Task<UserDto> Delete(int id)
         {
             var user = await Get(id);
-            _dbContext.Users.Remove(user);
+            _dbContext.Users.Remove(user.MapToEntity());
 
             await _dbContext.SaveChangesAsync();
 
             return user;
         }
 
-        public async Task<User> Get(int id)
+        public async Task<UserDto> Get(int id)
         {
             var user = await _dbContext.Users.SingleOrDefaultAsync(user => user.Id == id);
 
@@ -53,19 +55,20 @@ namespace Services.DbServices
                 throw new UserNotFoundException();  //add text??
             }
 
-            return user;
+            return new UserDto(user);
         }
 
-        public async Task<List<User>> GetList()
+        public async Task<List<UserDto>> GetList()
         {
-            return await _dbContext.Users.ToListAsync();
+            return await _dbContext.Users.Select(user => new UserDto(user)).ToListAsync();
         }
 
-        public async Task<User> Update(User newModel)
+        public async Task<UserDto> Update(UserDto newModel)
         {
             var user = await Get(newModel.Id);
 
-            user.Update(newModel);
+            user.Name = newModel.Name;
+            user.Email = newModel.Email;
 
             await _dbContext.SaveChangesAsync();
 

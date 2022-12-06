@@ -1,8 +1,8 @@
-﻿using Models.Entities;
+﻿using Services.Dtos;
 
 namespace Services.Interfaces
 {
-    public interface IUserServices : ICRUDAsync<User>
+    public interface IUserServices : ICRUDAsync<UserDto>
     {
     }
 }

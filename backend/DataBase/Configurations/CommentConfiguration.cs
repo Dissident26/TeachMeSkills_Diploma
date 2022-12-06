@@ -15,11 +15,11 @@ namespace DataBase.Configurations
             builder.HasOne(comment => comment.User)
                 .WithMany(comment => comment.Comments)
                 .HasForeignKey(comment => comment.UserId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Restrict);
             builder.HasOne(comment => comment.RepliedComment)
                .WithMany(comment => comment.Comments)
                .HasForeignKey(comment => comment.RepliedCommentId)
-               .OnDelete(DeleteBehavior.SetNull);
+               .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

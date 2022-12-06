@@ -41,7 +41,6 @@ namespace DataBase.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("RepliedCommentId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
@@ -168,19 +167,18 @@ namespace DataBase.Migrations
                     b.HasOne("Models.Entities.Post", "Post")
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Models.Entities.Comment", "RepliedComment")
                         .WithMany("Comments")
                         .HasForeignKey("RepliedCommentId")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Models.Entities.User", "User")
                         .WithMany("Comments")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Post");
@@ -195,7 +193,7 @@ namespace DataBase.Migrations
                     b.HasOne("Models.Entities.User", "User")
                         .WithMany("Posts")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");

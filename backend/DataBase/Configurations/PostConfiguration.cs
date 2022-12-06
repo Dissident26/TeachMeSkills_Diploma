@@ -10,16 +10,15 @@ namespace DataBase.Configurations
         public void Configure(EntityTypeBuilder<Post> builder)
         {
             builder.HasKey(post => post.Id);
-
-            builder.Property(user => user.Content).IsRequired();
+            builder.Property(post => post.Content).IsRequired();
             builder.HasOne(post => post.User)
                 .WithMany(user => user.Posts)
                 .HasForeignKey(post => post.UserId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Cascade);
             builder.HasMany(post => post.Comments)
                 .WithOne(comment => comment.Post)
                 .HasForeignKey(comment => comment.PostId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Cascade);
             builder.HasMany(post => post.Tags)
                 .WithMany(tag => tag.Posts)
                 .UsingEntity<PostTag>(

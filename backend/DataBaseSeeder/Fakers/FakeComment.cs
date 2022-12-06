@@ -1,22 +1,22 @@
 ﻿using Bogus;
 
-using Models.Entities;
+using Services.Dtos;
 using DataBaseSeeder.Interfaces;
 
 namespace DataBaseSeeder.Fakers
 {
-    public class FakeComment : IFakeGenerator<Comment>
+    public class FakeComment : IFakeGenerator<CommentDto>
     {
-        private readonly Faker<Comment> _comment = new Faker<Comment>()
+        private readonly Faker<CommentDto> _comment = new Faker<CommentDto>()
             .RuleFor(comment => comment.Content, (f, u) => f.Random.Words())
             .RuleFor(comment => comment.CreationDate, f => f.Date.Recent());
 
-        public List<Comment> Generate(int amount)
+        public List<CommentDto> Generate(int amount)
         {
             return _comment.Generate(amount);
         }
 
-        public Comment Generate()
+        public CommentDto Generate()
         {
             return _comment.Generate();
         }

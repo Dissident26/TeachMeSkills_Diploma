@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 using DataBase.Contexts;
-using Models.Entities;
+using Services.Dtos;
 using Services.Interfaces;
 using Services.Exceptions;
 
@@ -15,35 +15,38 @@ namespace Services.DbServices
             _dbContext = context;
         }
 
-        public async Task<Post> Create(Post model)
+        public async Task<PostDto> Create(PostDto model)
         {
-            await _dbContext.Posts.AddAsync(model);
+            await _dbContext.Posts.AddAsync(model.MapToEntity());
             await _dbContext.SaveChangesAsync();
 
             return model;
         }
 
-        public async Task<List<Post>> Create(List<Post> models)
+        public async Task<List<PostDto>> Create(List<PostDto> models)
         {
-            await _dbContext.Posts.AddRangeAsync(models);
+            var mappedModels = models.Select(model => model.MapToEntity());
+            await _dbContext.Posts.AddRangeAsync(mappedModels);
             await _dbContext.SaveChangesAsync();
 
-            var addedPosts = await _dbContext.Posts.AsNoTracking().ToListAsync();
+            var addedPosts = await _dbContext.Posts.AsNoTracking()
+                .Select(post => new PostDto(post))
+                .ToListAsync();
 
             return addedPosts;
         }
 
-        public async Task<Post> Delete(int id)
+        public async Task<PostDto> Delete(int id)
         {
-            var tag = await Get(id);
-            _dbContext.Posts.Remove(tag);
+            var post = await Get(id);
+            _dbContext.Posts.Remove(post.MapToEntity());
 
             await _dbContext.SaveChangesAsync();
 
-            return tag;
+            return post;
         }
 
-        public async Task<Post> Get(int id)
+        public async Task<PostDto> Get(int id)
         {
             var post = await _dbContext.Posts.SingleOrDefaultAsync(post => post.Id == id);
 
@@ -52,15 +55,16 @@ namespace Services.DbServices
                 throw new PostNotFoundException();  //add text??
             }
 
-            return post;
+            return new PostDto(post);
         }
 
-        public async Task<List<Post>> GetList()
+        public async Task<List<PostDto>> GetList()
         {
-            return await _dbContext.Posts.ToListAsync();
+            return await _dbContext.Posts
+                .Select(post => new PostDto(post)).ToListAsync();
         }
 
-        public async Task<Post> Update(Post newModel)
+        public async Task<PostDto> Update(PostDto newModel)
         {
             var post = await Get(newModel.Id);
 

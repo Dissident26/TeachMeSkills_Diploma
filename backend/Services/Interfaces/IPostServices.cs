@@ -1,8 +1,8 @@
-﻿using Models.Entities;
+﻿using Services.Dtos;
 
 namespace Services.Interfaces
 {
-    public interface IPostServices : ICRUDAsync<Post>
+    public interface IPostServices : ICRUDAsync<PostDto>
     {
     }
 }

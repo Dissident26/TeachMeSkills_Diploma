@@ -1,21 +1,21 @@
 ﻿using Bogus;
 
-using Models.Entities;
+using Services.Dtos;
 using DataBaseSeeder.Interfaces;
 
 namespace DataBaseSeeder.Fakers
 {
-    public class FakeTag : IFakeGenerator<Tag>
+    public class FakeTag : IFakeGenerator<TagDto>
     {
-        private readonly Faker<Tag> _tag = new Faker<Tag>()
+        private readonly Faker<TagDto> _tag = new Faker<TagDto>()
         .RuleFor(tag => tag.Name, (f, u) => f.Random.Words());
 
-        public List<Tag> Generate(int amount)
+        public List<TagDto> Generate(int amount)
         {
             return _tag.Generate(amount);
         }
 
-        public Tag Generate()
+        public TagDto Generate()
         {
             return _tag.Generate();
         }

@@ -1,7 +1,6 @@
 ﻿using DataBase.Contexts;
 using DataBaseSeeder.Fakers;
 
-using Models.Entities;
 using Services.DbServices;
 
 namespace DataBaseSeeder
@@ -9,7 +8,7 @@ namespace DataBaseSeeder
     public class DbSeeder
     {
         private readonly DbContextMain _dbContext;
-        private readonly FakeComment _comment = new FakeComment();
+        //private readonly FakeComment _comment = new FakeComment();
         public DbSeeder(DbContextMain context)
         {
             _dbContext = context;
