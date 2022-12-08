@@ -17,10 +17,11 @@ namespace Services.DbServices
 
         public async Task<UserDto> Create(UserDto model)
         {
-            await _dbContext.Users.AddAsync(model.MapToEntity());
+            var entity = model.MapToEntity();
+            await _dbContext.Users.AddAsync(entity);
             await _dbContext.SaveChangesAsync();
-
-            return model;
+            
+            return new UserDto(entity);
         }
 
         public async Task<List<UserDto>> Create(List<UserDto> models)
@@ -29,21 +30,23 @@ namespace Services.DbServices
             await _dbContext.Users.AddRangeAsync(mappedModels);
             await _dbContext.SaveChangesAsync();
 
-            var addedUsers = await _dbContext.Users.AsNoTracking()
-                .Select(user => new UserDto(user))
-                .ToListAsync();
-
-            return addedUsers;
+            return mappedModels.Select(user => new UserDto(user)).ToList();
         }
 
         public async Task<UserDto> Delete(int id)
         {
-            var user = await Get(id);
-            _dbContext.Users.Remove(user.MapToEntity());
+            var entity = await _dbContext.Users.SingleOrDefaultAsync(entity => entity.Id == id);
+
+            if (entity is null)
+            {
+                throw new UserNotFoundException();  //add text??
+            }
+
+            _dbContext.Users.Remove(entity);
 
             await _dbContext.SaveChangesAsync();
 
-            return user;
+            return new UserDto(entity);
         }
 
         public async Task<UserDto> Get(int id)
@@ -65,14 +68,19 @@ namespace Services.DbServices
 
         public async Task<UserDto> Update(UserDto newModel)
         {
-            var user = await Get(newModel.Id);
+            var entity = await _dbContext.Users.SingleOrDefaultAsync(entity => entity.Id == newModel.Id);
 
-            user.Name = newModel.Name;
-            user.Email = newModel.Email;
+            if (entity is null)
+            {
+                throw new UserNotFoundException();  //add text??
+            }
+
+            entity.Name = newModel.Name;
+            entity.Email = newModel.Email;
 
             await _dbContext.SaveChangesAsync();
 
-            return newModel;
+            return new UserDto(entity);
         }
     }
 }

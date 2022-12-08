@@ -17,10 +17,11 @@ namespace Services.DbServices
 
         public async Task<PostDto> Create(PostDto model)
         {
-            await _dbContext.Posts.AddAsync(model.MapToEntity());
+            var entity = model.MapToEntity();
+            await _dbContext.Posts.AddAsync(entity);
             await _dbContext.SaveChangesAsync();
 
-            return model;
+            return new PostDto(entity);
         }
 
         public async Task<List<PostDto>> Create(List<PostDto> models)
@@ -29,21 +30,23 @@ namespace Services.DbServices
             await _dbContext.Posts.AddRangeAsync(mappedModels);
             await _dbContext.SaveChangesAsync();
 
-            var addedPosts = await _dbContext.Posts.AsNoTracking()
-                .Select(post => new PostDto(post))
-                .ToListAsync();
-
-            return addedPosts;
+            return mappedModels.Select(post => new PostDto(post)).ToList();
         }
 
         public async Task<PostDto> Delete(int id)
         {
-            var post = await Get(id);
-            _dbContext.Posts.Remove(post.MapToEntity());
+            var entity = await _dbContext.Posts.SingleOrDefaultAsync(entity => entity.Id == id);
+
+            _dbContext.Posts.Remove(entity);
+
+            if (entity is null)
+            {
+                throw new PostNotFoundException();  //add text??
+            }
 
             await _dbContext.SaveChangesAsync();
 
-            return post;
+            return new PostDto(entity);
         }
 
         public async Task<PostDto> Get(int id)
@@ -66,13 +69,18 @@ namespace Services.DbServices
 
         public async Task<PostDto> Update(PostDto newModel)
         {
-            var post = await Get(newModel.Id);
+            var entity = await _dbContext.Posts.SingleOrDefaultAsync(entity => entity.Id == newModel.Id);
 
-            post.Content = newModel.Content;
+            if (entity is null)
+            {
+                throw new PostNotFoundException();  //add text??
+            }
+
+            entity.Content = newModel.Content;
 
             await _dbContext.SaveChangesAsync();
 
-            return newModel;
+            return new PostDto(entity);
         }
     }
 }

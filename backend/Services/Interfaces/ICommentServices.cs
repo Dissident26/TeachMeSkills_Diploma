@@ -2,7 +2,7 @@
 
 namespace Services.Interfaces
 {
-    internal interface ICommentServices : ICRUDAsync<CommentDto>
+    public interface ICommentServices : ICRUDAsync<CommentDto>
     {
     }
 }

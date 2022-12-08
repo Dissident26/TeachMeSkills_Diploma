@@ -17,10 +17,11 @@ namespace Services.DbServices
 
         public async Task<CommentDto> Create(CommentDto model)
         {
-            await _dbContext.Comments.AddAsync(model.MapToEntity());
+            var entity = model.MapToEntity();
+            await _dbContext.Comments.AddAsync(entity);
             await _dbContext.SaveChangesAsync();
 
-            return model;
+            return new CommentDto(entity);
         }
 
         public async Task<List<CommentDto>> Create(List<CommentDto> models)
@@ -29,21 +30,23 @@ namespace Services.DbServices
             await _dbContext.Comments.AddRangeAsync(mappedModels);
             await _dbContext.SaveChangesAsync();
 
-            var addedComments = await _dbContext.Comments.AsNoTracking()
-                .Select(comment => new CommentDto(comment))
-                .ToListAsync();
-
-            return addedComments;
+            return mappedModels.Select(comment => new CommentDto(comment)).ToList();
         }
 
         public async Task<CommentDto> Delete(int id)
         {
-            var comment = await Get(id);
-            _dbContext.Comments.Remove(comment.MapToEntity());
+            var entity = await _dbContext.Comments.SingleOrDefaultAsync(entity => entity.Id == id);
+
+            if (entity is null)
+            {
+                throw new CommentNotFoundException();  //add text??
+            }
+
+            _dbContext.Comments.Remove(entity);
 
             await _dbContext.SaveChangesAsync();
 
-            return comment;
+            return new CommentDto(entity);
         }
 
         public async Task<CommentDto> Get(int id)
@@ -66,13 +69,18 @@ namespace Services.DbServices
 
         public async Task<CommentDto> Update(CommentDto newModel)
         {
-            var post = await Get(newModel.Id);
+            var entity = await _dbContext.Comments.SingleOrDefaultAsync(entity => entity.Id == newModel.Id);
 
-            post.Content = newModel.Content;
+            if (entity is null)
+            {
+                throw new CommentNotFoundException();  //add text??
+            }
+
+            entity.Content = newModel.Content;
 
             await _dbContext.SaveChangesAsync();
 
-            return newModel;
+            return new CommentDto(entity);
         }
     }
 }

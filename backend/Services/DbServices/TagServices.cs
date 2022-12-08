@@ -17,10 +17,11 @@ namespace Services.DbServices
 
         public async Task<TagDto> Create(TagDto model)
         {
-            await _dbContext.Tags.AddAsync(model.MapToEntity());
+            var entity = model.MapToEntity();
+            await _dbContext.Tags.AddAsync(entity);
             await _dbContext.SaveChangesAsync();
 
-            return model;
+            return new TagDto(entity);
         }
 
         public async Task<List<TagDto>> Create(List<TagDto> models)
@@ -29,21 +30,23 @@ namespace Services.DbServices
             await _dbContext.Tags.AddRangeAsync(mappedModels);
             await _dbContext.SaveChangesAsync();
 
-            var addedTags = await _dbContext.Tags.AsNoTracking()
-                .Select(tag => new TagDto(tag))
-                .ToListAsync();
-
-            return addedTags;
+            return mappedModels.Select(tag => new TagDto(tag)).ToList();
         }
 
         public async Task<TagDto> Delete(int id)
         {
-            var tag = await Get(id);
-            _dbContext.Tags.Remove(tag.MapToEntity());
+            var entity = await _dbContext.Tags.SingleOrDefaultAsync(entity => entity.Id == id);
+
+            if (entity is null)
+            {
+                throw new TagNotFoundException();  //add text??
+            }
+
+            _dbContext.Tags.Remove(entity);
 
             await _dbContext.SaveChangesAsync();
 
-            return tag;
+            return new TagDto(entity);
         }
 
         public async Task<TagDto> Get(int id)
@@ -67,13 +70,18 @@ namespace Services.DbServices
 
         public async Task<TagDto> Update(TagDto newModel)
         {
-            var tag = await Get(newModel.Id);
+            var entity = await _dbContext.Tags.SingleOrDefaultAsync(entity => entity.Id == newModel.Id);
 
-            tag.Name = newModel.Name;
+            if (entity is null)
+            {
+                throw new TagNotFoundException();  //add text??
+            }
+
+            entity.Name = newModel.Name;
 
             await _dbContext.SaveChangesAsync();
 
-            return newModel;
+            return new TagDto(entity);
         }
     }
 }
