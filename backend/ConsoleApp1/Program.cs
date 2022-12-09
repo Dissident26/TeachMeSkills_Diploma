@@ -5,4 +5,4 @@ var ctx = new DbContextMain();
 
 var seeder = new DbSeeder(ctx);
 
-//await seeder.Seed(100);
+await seeder.Seed(100);

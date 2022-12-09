@@ -30,7 +30,7 @@ namespace Services.DbServices
             await _dbContext.Users.AddRangeAsync(mappedModels);
             await _dbContext.SaveChangesAsync();
 
-            return mappedModels.Select(user => new UserDto(user)).ToList();
+            return await _dbContext.Users.AsNoTracking().Select(user => new UserDto(user)).ToListAsync();
         }
 
         public async Task<UserDto> Delete(int id)

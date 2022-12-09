@@ -30,7 +30,7 @@ namespace Services.DbServices
             await _dbContext.PostTags.AddRangeAsync(mappedModels);
             await _dbContext.SaveChangesAsync();
 
-            return mappedModels.Select(postTag => new PostTagDto(postTag)).ToList();
+            return await _dbContext.PostTags.AsNoTracking().Select(postTag => new PostTagDto(postTag)).ToListAsync();
         }
 
         public async Task<PostTagDto> Delete(int id)

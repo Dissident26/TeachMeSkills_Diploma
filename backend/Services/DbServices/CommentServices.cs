@@ -30,7 +30,7 @@ namespace Services.DbServices
             await _dbContext.Comments.AddRangeAsync(mappedModels);
             await _dbContext.SaveChangesAsync();
 
-            return mappedModels.Select(comment => new CommentDto(comment)).ToList();
+            return await _dbContext.Comments.AsNoTracking().Select(comment => new CommentDto(comment)).ToListAsync();
         }
 
         public async Task<CommentDto> Delete(int id)
