@@ -42,6 +42,16 @@ namespace Services.DbServices
                 throw new UserNotFoundException();  //add text??
             }
 
+            await _dbContext.Comments
+                .Where(comment => comment.UserId == id)
+                .ExecuteUpdateAsync(s =>
+                    s.SetProperty(comment => comment.UserId, comment => null));
+
+            await _dbContext.Posts
+                .Where(post => post.UserId == id)
+                .ExecuteUpdateAsync(s =>
+                    s.SetProperty(post => post.UserId, post => null));
+
             _dbContext.Users.Remove(entity);
 
             await _dbContext.SaveChangesAsync();

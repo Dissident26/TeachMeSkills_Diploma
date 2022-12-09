@@ -43,7 +43,7 @@ namespace DataBase.Migrations
                     b.Property<int?>("RepliedCommentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -72,7 +72,7 @@ namespace DataBase.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -171,15 +171,12 @@ namespace DataBase.Migrations
                         .IsRequired();
 
                     b.HasOne("Models.Entities.Comment", "RepliedComment")
-                        .WithMany("Comments")
-                        .HasForeignKey("RepliedCommentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .WithMany()
+                        .HasForeignKey("RepliedCommentId");
 
                     b.HasOne("Models.Entities.User", "User")
                         .WithMany("Comments")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Post");
 
@@ -192,9 +189,7 @@ namespace DataBase.Migrations
                 {
                     b.HasOne("Models.Entities.User", "User")
                         .WithMany("Posts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
@@ -216,11 +211,6 @@ namespace DataBase.Migrations
                     b.Navigation("Post");
 
                     b.Navigation("Tag");
-                });
-
-            modelBuilder.Entity("Models.Entities.Comment", b =>
-                {
-                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("Models.Entities.Post", b =>

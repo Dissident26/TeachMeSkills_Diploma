@@ -11,14 +11,9 @@ namespace DataBase.Configurations
         {
             builder.HasKey(post => post.Id);
             builder.Property(post => post.Content).IsRequired();
-            builder.HasOne(post => post.User)
-                .WithMany(user => user.Posts)
-                .HasForeignKey(post => post.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
             builder.HasMany(post => post.Comments)
                 .WithOne(comment => comment.Post)
-                .HasForeignKey(comment => comment.PostId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(comment => comment.PostId);
             builder.HasMany(post => post.Tags)
                 .WithMany(tag => tag.Posts)
                 .UsingEntity<PostTag>(

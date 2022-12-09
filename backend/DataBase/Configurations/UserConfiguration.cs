@@ -15,6 +15,14 @@ namespace DataBase.Configurations
             builder.HasIndex(user => user.Name).IsUnique();
             builder.HasIndex(user => user.Email).IsUnique();
             builder.HasIndex(user => user.RegistrationDate).IsUnique();
+            builder.HasMany(user => user.Comments)
+                .WithOne(comment => comment.User)
+                .HasForeignKey(comment => comment.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+            builder.HasMany(user => user.Posts)
+                .WithOne(comment => comment.User)
+                .HasForeignKey(comment => comment.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
         }
     }
 }

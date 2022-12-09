@@ -12,14 +12,10 @@ namespace DataBase.Configurations
             builder.HasKey(comment => comment.Id);
             builder.Property(comment => comment.Content).IsRequired();
             builder.Property(comment => comment.CreationDate).IsRequired();
-            builder.HasOne(comment => comment.User)
-                .WithMany(comment => comment.Comments)
-                .HasForeignKey(comment => comment.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
             builder.HasOne(comment => comment.RepliedComment)
-               .WithMany(comment => comment.Comments)
+               .WithMany()
                .HasForeignKey(comment => comment.RepliedCommentId)
-               .OnDelete(DeleteBehavior.Restrict);
+               .OnDelete(DeleteBehavior.ClientSetNull);
         }
     }
 }

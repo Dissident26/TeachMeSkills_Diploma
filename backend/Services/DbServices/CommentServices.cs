@@ -35,12 +35,18 @@ namespace Services.DbServices
 
         public async Task<CommentDto> Delete(int id)
         {
-            var entity = await _dbContext.Comments.SingleOrDefaultAsync(entity => entity.Id == id);
+            var entity = await _dbContext.Comments
+                .SingleOrDefaultAsync(entity => entity.Id == id);
 
             if (entity is null)
             {
                 throw new CommentNotFoundException();  //add text??
             }
+
+            await _dbContext.Comments
+                .Where(comment => comment.RepliedCommentId == id)
+                .ExecuteUpdateAsync(s =>
+                    s.SetProperty(comment => comment.RepliedCommentId, comment => null));
 
             _dbContext.Comments.Remove(entity);
 
