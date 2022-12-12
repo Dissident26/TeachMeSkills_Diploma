@@ -21,6 +21,7 @@ namespace Services.Extentions
             services.AddScoped<ITagServices, TagServices>();
             services.AddScoped<IPostTagServices, PostTagServices>();
             services.AddScoped<ICommentServices, CommentServices>();
+            services.AddScoped<IAuthServices, AuthServices>();
 
             return services;
         }
