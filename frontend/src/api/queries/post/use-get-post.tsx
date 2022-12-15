@@ -8,4 +8,4 @@ export const useGetPost = (id?: number) =>
     queryKey: [queryKeys.GetPost],
     queryFn: () => getPost(id),
     enabled: !!id,
-  }) as UseQueryResult<GetPostResponse>; //add types
+  });

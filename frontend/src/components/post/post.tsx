@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from "react";
 
 import { GetPostResponse } from "../../api";
+import { UserSection } from "../user";
 
 import styles from "./styles.module.scss";
 
@@ -14,7 +15,7 @@ export const Post: FunctionComponent<PostProps> = ({ data }: PostProps) => {
   return (
     <div className={styles.container}>
       <div key={id}>
-        <span>User: {userId}</span>
+        <UserSection userId={userId} />
         <p>{content}</p>
         <p>Created: {creationDate.toString()}</p>
       </div>

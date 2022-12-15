@@ -11,6 +11,8 @@ export const Main: FunctionComponent = () => {
     return <Spinner />;
   }
 
+  data.length = 10; //add Take(10) on BE
+
   return (
     <>
       <div className={styles.container}>

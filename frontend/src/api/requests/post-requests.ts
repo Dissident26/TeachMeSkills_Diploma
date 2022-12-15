@@ -1,9 +1,6 @@
 import { urls } from "../../constants/urls";
 import { api } from "../api";
-import {
-  GetPostListResponse,
-  GetPostResponse,
-} from "../response-models/post-models";
+import { GetPostListResponse, GetPostResponse } from "../response-models";
 
 export const getPostsList = async (): Promise<GetPostListResponse> => {
   const response = await api.get(urls.Post.GetList);
