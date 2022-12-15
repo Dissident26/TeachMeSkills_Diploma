@@ -24,12 +24,16 @@ namespace WebApi
                 app.UseSwaggerUI();
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors((p) =>
+            {
+                p.AllowAnyOrigin();
+                p.AllowAnyMethod();
+                p.AllowAnyHeader();
+            });
             app.UseStaticFiles();
             app.UseRouting();
             app.UseHttpsRedirection();
             app.UseAuthorization();
-
             //midleware
 
             app.UseEndpoints(endpoints =>
