@@ -61,6 +61,13 @@ namespace Services.DbServices
             return new PostDto(post);
         }
 
+        public async Task<List<PostDto>> Get(int[] ids)
+        {
+            return await _dbContext.Posts.Where(post => ids.Contains(post.Id))
+                .Select(post => new PostDto(post))
+                .ToListAsync();
+        }
+
         public async Task<List<PostDto>> GetList()
         {
             return await _dbContext.Posts

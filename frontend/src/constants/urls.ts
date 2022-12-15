@@ -10,5 +10,6 @@ export const urls = {
   },
   User: {
     Get: `${BASE_URLS.USER}`,
+    GetByIds: `${BASE_URLS.USER}/GetByIds`,
   },
 };

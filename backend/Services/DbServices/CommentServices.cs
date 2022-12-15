@@ -67,6 +67,13 @@ namespace Services.DbServices
             return new CommentDto(comment);
         }
 
+        public async Task<List<CommentDto>> Get(int[] ids)
+        {
+            return await _dbContext.Comments.Where(comment => ids.Contains(comment.Id))
+                .Select(comment => new CommentDto(comment))
+                .ToListAsync();
+        }
+
         public async Task<List<CommentDto>> GetList()
         {
             return await _dbContext.Comments

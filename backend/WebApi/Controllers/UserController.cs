@@ -19,6 +19,13 @@ namespace WebApi
         {
             return await _userServices.Get(id);
         }
+
+        [HttpPost]
+        [Route(RouteConstants.GetByIds)]
+        public async Task<List<UserDto>> GetUser([FromBody] GetByIdsRequest request)
+        {
+            return await _userServices.Get(request.Ids);
+        }
         [HttpGet]
         [Route(RouteConstants.GetList)]
         public async Task<List<UserDto>> GetUsersList()

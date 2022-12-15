@@ -3,6 +3,7 @@
     public class RouteConstants
     {
         public const string Get = "/[controller]/{id}";
+        public const string GetByIds = "/[controller]/GetByIds";
         public const string GetList = "/[controller]/List";
         public const string Add = "/[controller]/Add";
         public const string Update = "/[controller]/Update";

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Services.DbServices;
 using Services.Dtos;
 using Services.Interfaces;
 using WebApi.Constants;
@@ -18,6 +19,12 @@ namespace WebApi
         public async Task<CommentDto> GetComment(int id)
         {
             return await _commentServices.Get(id);
+        }
+        [HttpPost]
+        [Route(RouteConstants.GetByIds)]
+        public async Task<List<CommentDto>> GetComment([FromBody] GetByIdsRequest request)
+        {
+            return await _commentServices.Get(request.Ids);
         }
         [HttpGet]
         [Route(RouteConstants.GetList)]

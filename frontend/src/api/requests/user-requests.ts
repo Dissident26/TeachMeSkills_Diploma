@@ -7,3 +7,13 @@ export const getUser = async (id?: number): Promise<GetUserResponse> => {
 
   return response.data;
 };
+
+export const getUsersByIds = async (
+  ids?: number[]
+): Promise<GetUserResponse[]> => {
+  const response = await api.post(`${urls.User.GetByIds}`, {
+    ids,
+  });
+
+  return response.data;
+};

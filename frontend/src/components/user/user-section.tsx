@@ -1,25 +1,18 @@
 import React, { FunctionComponent } from "react";
-import { useGetUser } from "../../api/queries/user/use-get-user";
-import { Spinner } from "../spinner";
+import { GetUserResponse } from "../../api";
 
 import styles from "./styles.module.scss";
 
 interface UserSectionProps {
-  userId?: number;
+  user?: GetUserResponse;
 }
 
 export const UserSection: FunctionComponent<UserSectionProps> = ({
-  userId,
+  user,
 }: UserSectionProps) => {
-  const { isLoading, data } = useGetUser(userId);
-
-  if (isLoading) {
-    return <Spinner />;
-  }
-
   return (
     <div className={styles.container}>
-      <div>{data.name}</div>
+      <div>{user.name}</div>
     </div>
   );
 };

@@ -71,6 +71,13 @@ namespace Services.DbServices
             return new UserDto(user);
         }
 
+        public async Task<List<UserDto>> Get(int[] ids)
+        {
+            return await _dbContext.Users.Where(user => ids.Contains(user.Id))
+                .Select(user => new UserDto(user))
+                .ToListAsync();
+        }
+
         public async Task<List<UserDto>> GetList()
         {
             return await _dbContext.Users.Select(user => new UserDto(user)).ToListAsync();

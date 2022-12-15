@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Services.DbServices;
 using Services.Dtos;
 using Services.Interfaces;
 using WebApi.Constants;
@@ -18,6 +19,12 @@ namespace WebApi
         public async Task<PostTagDto> GetPostTag(int id)
         {
             return await _postTagServices.Get(id);
+        }
+        [HttpPost]
+        [Route(RouteConstants.GetByIds)]
+        public async Task<List<PostTagDto>> GetPostTag([FromBody] GetByIdsRequest request)
+        {
+            return await _postTagServices.Get(request.Ids);
         }
         [HttpGet]
         [Route(RouteConstants.GetList)]

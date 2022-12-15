@@ -62,6 +62,13 @@ namespace Services.DbServices
             return new TagDto(tag);
         }
 
+        public async Task<List<TagDto>> Get(int[] ids)
+        {
+            return await _dbContext.Tags.Where(tag => ids.Contains(tag.Id))
+                .Select(tag => new TagDto(tag))
+                .ToListAsync();
+        }
+
         public async Task<List<TagDto>> GetList()
         {
             return await _dbContext.Tags
