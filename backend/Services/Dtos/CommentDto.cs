@@ -11,13 +11,13 @@ namespace Services.Dtos
         public int? RepliedCommentId { get; set; }
         public string Content { get; set; }
         public DateTime CreationDate { get; set; }
+        public List<CommentDto> RepliedComments { get; set; }
         public CommentDto() { }
         public CommentDto(Comment entity)
         {
             Id = entity.Id;
             PostId = entity.PostId;
             UserId = entity.UserId;
-            RepliedCommentId = entity.RepliedCommentId;
             Content = entity.Content;
             CreationDate = entity.CreationDate;
         }
@@ -28,7 +28,6 @@ namespace Services.Dtos
                 Id = Id,
                 PostId = PostId,
                 UserId = UserId,
-                RepliedCommentId = RepliedCommentId,
                 Content = Content,
                 CreationDate = CreationDate
             };

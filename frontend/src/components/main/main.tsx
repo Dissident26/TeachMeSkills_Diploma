@@ -25,18 +25,13 @@ export const Main: FunctionComponent = () => {
     return <Spinner />;
   }
 
-  // data.length = 10; //add Take(10) on BE
-
   return (
     users && (
-      <>
-        <div className={styles.container}>
-          {posts?.map((post: GetPostResponse) => (
-            <Post data={post} users={usersDictionary} />
-          ))}
-          main content
-        </div>
-      </>
+      <div className={styles.container}>
+        {posts?.map((post: GetPostResponse) => (
+          <Post post={post} users={usersDictionary} />
+        ))}
+      </div>
     )
   );
 };

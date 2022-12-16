@@ -9,6 +9,7 @@ namespace Services.Dtos
         public int? UserId { get; set; }
         public string Content { get; set; }
         public DateTime CreationDate { get; set; }
+        public int CommentsCount { get; set; }
         public PostDto() { }
         public PostDto(Post entity)
         {

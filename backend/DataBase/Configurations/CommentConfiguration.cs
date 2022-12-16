@@ -12,10 +12,20 @@ namespace DataBase.Configurations
             builder.HasKey(comment => comment.Id);
             builder.Property(comment => comment.Content).IsRequired();
             builder.Property(comment => comment.CreationDate).IsRequired();
-            builder.HasOne(comment => comment.RepliedComment)
-               .WithMany()
-               .HasForeignKey(comment => comment.RepliedCommentId)
-               .OnDelete(DeleteBehavior.ClientSetNull);
+
+            builder.HasMany(comment => comment.Comments)
+               .WithMany(comment => comment.Replies)
+               .UsingEntity<RepliedComment>(
+                    repliedComment => repliedComment
+                        .HasOne(repliedComment => repliedComment.Comment)
+                        .WithMany()
+                        .HasForeignKey(repliedComment => repliedComment.RepliedCommentId),
+                    repliedComment => repliedComment
+                        .HasOne(repliedComment => repliedComment.Comment)
+                        .WithMany()
+                        .HasForeignKey(repliedComment => repliedComment.CommentId)
+                );
+
         }
     }
 }

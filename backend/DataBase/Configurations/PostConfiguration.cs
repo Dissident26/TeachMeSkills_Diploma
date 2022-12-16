@@ -19,10 +19,10 @@ namespace DataBase.Configurations
                 .UsingEntity<PostTag>(
                    postTag => postTag.HasOne(postTag => postTag.Tag)
                         .WithMany(post => post.PostTags)
-                        .HasForeignKey(userBook => userBook.TagId),
+                        .HasForeignKey(postTag => postTag.TagId),
                     postTag => postTag.HasOne(postTag => postTag.Post)
                         .WithMany(post => post.PostTags)
-                        .HasForeignKey(userBook => userBook.PostId)
+                        .HasForeignKey(postTag => postTag.PostId)
                 );
             builder.Property(post => post.CreationDate).IsRequired();
         }

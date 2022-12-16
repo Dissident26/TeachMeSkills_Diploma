@@ -1,6 +1,6 @@
 ﻿using DataBase.Contexts;
 using DataBaseSeeder.Fakers;
-
+using Models.Entities;
 using Services.DbServices;
 using Services.Dtos;
 
@@ -21,7 +21,7 @@ namespace DataBaseSeeder
             var postsIds = await SeedPosts(numberOfPosts, usersIds);
             await SeedPostTags(numberOfPosts, postsIds, tagsIds);
             var comments = await SeedComments(500, usersIds, postsIds);
-            await SeedRepliedComments(500, comments, usersIds);
+            await SeedRepliedComments(500, postsIds, comments);
         }
         private async Task<int[]> SeedUsers(int amount)
         {
@@ -71,12 +71,12 @@ namespace DataBaseSeeder
 
             return createdComments.ToArray();
         }
-        private async Task SeedRepliedComments(int amount, CommentDto[] comments, int[] userIds)
+        private async Task SeedRepliedComments(int amount, int[] postIds, CommentDto[] comments)
         {
-            FakeComment fakeCommentModel = new FakeComment(comments, userIds);
+            FakeRepliedComment fakeCommentModel = new FakeRepliedComment(postIds, comments);
             var repliedComments = fakeCommentModel.Generate(amount);
 
-            var commentsServices = new CommentServices(_dbContext);
+            var commentsServices = new RepliedCommentServices(_dbContext);
             var createdComments = await commentsServices.Create(repliedComments);
         }
     }

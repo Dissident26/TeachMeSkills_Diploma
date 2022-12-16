@@ -2,7 +2,7 @@ export interface GetCommentResponse {
   id: number;
   postId: number;
   userId?: number;
-  repliedCommentId?: number;
+  repliedComments?: null | GetCommentResponse[];
   content: string;
   creationDate: Date;
 }

@@ -3,6 +3,7 @@ export interface GetPostResponse {
   userId?: number;
   content: string;
   creationDate: Date;
+  commentsCount: number;
 }
 
 export type GetPostListResponse = GetPostResponse[];

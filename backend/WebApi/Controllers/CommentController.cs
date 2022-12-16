@@ -3,6 +3,7 @@ using Services.Models;
 using Services.Dtos;
 using Services.Interfaces;
 using WebApi.Constants;
+using Microsoft.IdentityModel.Tokens;
 
 namespace WebApi
 {
@@ -10,21 +11,42 @@ namespace WebApi
     public class CommentController : ControllerBase
     {
         private readonly ICommentServices _commentServices;
-        public CommentController(ICommentServices commentServices)
+        private readonly IRepliedCommentServices _repliedCommentServices;
+        public CommentController(ICommentServices commentServices, IRepliedCommentServices repliedCommentServices)
         {
             _commentServices = commentServices;
+            _repliedCommentServices = repliedCommentServices;
         }
         [HttpGet]
         [Route(RouteConstants.Get)]
         public async Task<CommentDto> GetComment(int id)
         {
-            return await _commentServices.Get(id);
+            var comment = await _commentServices.Get(id);
+            var repliedComments = await _repliedCommentServices.GetListByComment(id);
+
+            if (!repliedComments.IsNullOrEmpty())
+            {
+                comment.RepliedComments = repliedComments;
+            }
+
+            return comment;
         }
         [HttpGet]
         [Route(RouteConstants.GetById)]
         public async Task<List<CommentDto>> GetCommentByPostId(int id)
         {
-            return await _commentServices.GetListByPost(id);
+            var comments = await _commentServices.GetListByPost(id);
+
+            foreach (var comment in comments)
+            {
+                var repliedComments = await _repliedCommentServices.GetListByComment(comment.Id);
+                if (!repliedComments.IsNullOrEmpty())
+                {
+                    comment.RepliedComments = repliedComments;
+                }
+            }
+
+            return comments;
         }
         [HttpPost]
         [Route(RouteConstants.GetById)]

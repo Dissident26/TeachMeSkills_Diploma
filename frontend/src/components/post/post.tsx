@@ -7,23 +7,21 @@ import { UserSection } from "../user";
 import styles from "./styles.module.scss";
 
 interface PostProps {
-  data: GetPostResponse;
+  post: GetPostResponse;
   users: Record<number, GetUserResponse>;
 }
 
 export const Post: FunctionComponent<PostProps> = ({
-  data,
+  post,
   users,
 }: PostProps) => {
-  const { id, content, creationDate, userId } = data;
-
   return (
     <div className={styles.container}>
-      <div key={id}>
-        <UserSection user={users[userId]} />
-        <p>{content}</p>
-        <p>Created: {creationDate.toString()}</p>
-        <CommentsSection postId={id} users={users} />
+      <div key={post.id}>
+        <UserSection user={users[post.userId]} />
+        <p>{post.content}</p>
+        <p>Created: {post.creationDate.toString()}</p>
+        <CommentsSection post={post} users={users} />
       </div>
     </div>
   );

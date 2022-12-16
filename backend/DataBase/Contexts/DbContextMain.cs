@@ -14,6 +14,7 @@ namespace DataBase.Contexts
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<PostTag> PostTags { get; set; }
+        public DbSet<RepliedComment> RepliedComments { get; set; }
         public DbContextMain() 
         { }
         public DbContextMain(DbContextOptions contextOptions) : base(contextOptions) 
@@ -37,7 +38,8 @@ namespace DataBase.Contexts
             modelBuilder.ApplyConfiguration(new TagConfiguration());
             modelBuilder.ApplyConfiguration(new PostTagConfiguration());
             modelBuilder.ApplyConfiguration(new CommentConfiguration());
-            modelBuilder.ApplyConfiguration(new UserAuthModelConfiguration());
+            modelBuilder.ApplyConfiguration(new RepliedCommentConfiguration());
+            modelBuilder.ApplyConfiguration(new UserAuthModelConfiguration()); 
 
             base.OnModelCreating(modelBuilder);
         }

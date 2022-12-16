@@ -31,7 +31,8 @@ namespace Services.DbServices
             await _dbContext.Posts.AddRangeAsync(mappedModels);
             await _dbContext.SaveChangesAsync();
 
-            return await _dbContext.Posts.AsNoTracking().Select(post => new PostDto(post)).ToListAsync();
+            return await _dbContext.Posts.AsNoTracking()
+                .Select(post => new PostDto(post)).ToListAsync();
         }
 
         public async Task<PostDto> Delete(int id)
@@ -72,7 +73,7 @@ namespace Services.DbServices
         public async Task<List<PostDto>> GetList()
         {
             return await _dbContext.Posts
-                .Select(post => new PostDto(post)).ToListAsync();
+                .Select(post => new PostDto(post) { CommentsCount = post.Comments.Count() }).ToListAsync();
         }
 
         public async Task<PostDto> Update(PostDto newModel)
