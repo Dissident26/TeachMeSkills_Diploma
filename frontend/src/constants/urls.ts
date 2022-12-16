@@ -1,6 +1,7 @@
 const BASE_URLS = {
   POST: "Post",
   USER: "User",
+  COMMENT: "Comment",
 };
 
 export const urls = {
@@ -10,6 +11,9 @@ export const urls = {
   },
   User: {
     Get: `${BASE_URLS.USER}`,
-    GetByIds: `${BASE_URLS.USER}/GetByIds`,
+    GetByIds: `${BASE_URLS.USER}/GetById`,
+  },
+  Comment: {
+    GetListByPostId: `${BASE_URLS.COMMENT}/GetById`,
   },
 };

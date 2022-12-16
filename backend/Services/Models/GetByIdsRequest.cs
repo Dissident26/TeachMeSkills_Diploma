@@ -1,4 +1,4 @@
-﻿namespace Services.Interfaces
+﻿namespace Services.Models
 {
     public class GetByIdsRequest
     {

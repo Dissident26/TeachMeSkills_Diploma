@@ -12,7 +12,7 @@ export const UserSection: FunctionComponent<UserSectionProps> = ({
 }: UserSectionProps) => {
   return (
     <div className={styles.container}>
-      <div>{user.name}</div>
+      <div>{user?.name}</div>
     </div>
   );
 };

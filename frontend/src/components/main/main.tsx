@@ -32,7 +32,7 @@ export const Main: FunctionComponent = () => {
       <>
         <div className={styles.container}>
           {posts?.map((post: GetPostResponse) => (
-            <Post data={post} user={usersDictionary[post?.userId]} />
+            <Post data={post} users={usersDictionary} />
           ))}
           main content
         </div>

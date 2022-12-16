@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Services.DbServices;
+using Services.Models;
 using Services.Dtos;
 using Services.Interfaces;
 using WebApi.Constants;
@@ -21,7 +21,7 @@ namespace WebApi
             return await _postServices.Get(id);
         }
         [HttpPost]
-        [Route(RouteConstants.GetByIds)]
+        [Route(RouteConstants.GetById)]
         public async Task<List<PostDto>> GetPost([FromBody] GetByIdsRequest request)
         {
             return await _postServices.Get(request.Ids);

@@ -4,5 +4,6 @@ namespace Services.Interfaces
 {
     public interface ICommentServices : ICRUDAsync<CommentDto>
     {
+        public Task<List<CommentDto>> GetListByPost(int postId);
     }
 }

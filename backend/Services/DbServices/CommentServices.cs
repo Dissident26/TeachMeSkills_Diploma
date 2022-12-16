@@ -80,6 +80,13 @@ namespace Services.DbServices
                 .Select(comment => new CommentDto(comment)).ToListAsync();
         }
 
+        public async Task<List<CommentDto>> GetListByPost(int postId)
+        {
+            return await _dbContext.Comments
+                .Where(comment => comment.PostId == postId)
+                .Select(comment => new CommentDto(comment)).ToListAsync();
+        }
+
         public async Task<CommentDto> Update(CommentDto newModel)
         {
             var entity = await _dbContext.Comments.SingleOrDefaultAsync(entity => entity.Id == newModel.Id);
