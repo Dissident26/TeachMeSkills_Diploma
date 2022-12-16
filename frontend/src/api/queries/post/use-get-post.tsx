@@ -1,6 +1,6 @@
-import { useQuery, UseQueryResult } from "react-query";
+import { useQuery } from "react-query";
 
-import { getPost, GetPostResponse } from "../..";
+import { getPost } from "../..";
 import { queryKeys } from "../query-keys";
 
 export const useGetPost = (id?: number) =>

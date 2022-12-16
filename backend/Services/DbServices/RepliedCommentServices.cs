@@ -102,7 +102,7 @@ namespace Services.DbServices
                 .ToListAsync();
 
             return await _dbContext.Comments.Where(comment => repliedComments.Contains(comment.Id))
-                .Select(comment => new CommentDto(comment))
+                .Select(comment => new CommentDto(comment) { User = new UserDto(comment.User) })
                 .ToListAsync();
         }
     }

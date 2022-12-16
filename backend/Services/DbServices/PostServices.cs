@@ -73,7 +73,10 @@ namespace Services.DbServices
         public async Task<List<PostDto>> GetList()
         {
             return await _dbContext.Posts
-                .Select(post => new PostDto(post) { CommentsCount = post.Comments.Count() }).ToListAsync();
+                .Select(post => new PostDto(post) {
+                    User = new UserDto(post.User),
+                    CommentsCount = post.Comments.Count() 
+                }).ToListAsync();
         }
 
         public async Task<PostDto> Update(PostDto newModel)

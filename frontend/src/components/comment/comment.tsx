@@ -1,22 +1,24 @@
 import React, { ReactNode } from "react";
-import { GetCommentResponse, GetUserResponse } from "../../api";
+import { CommentDto, UserDto } from "../../api";
 import { UserSection } from "../user";
 
 import styles from "./styles.module.scss";
 
 interface CommentProps {
-  comment: GetCommentResponse;
-  user?: GetUserResponse;
+  comment: CommentDto;
+  user?: UserDto;
   children?: ReactNode;
 }
 
 export const Comment = ({ comment, user, children }: CommentProps) => {
   return (
-    <div className={styles.container}>
-      <UserSection user={user} />
-      <div>{comment?.content}</div>
-      <div>{comment?.creationDate.toString()}</div>
-      {children}
-    </div>
+    <>
+      <div className={styles.container}>
+        <div>{comment?.content}</div>
+        <div>{comment?.creationDate.toString()}</div>
+        <UserSection user={user} />
+      </div>
+      <div className={styles.childrenContainer}>{children}</div>
+    </>
   );
 };

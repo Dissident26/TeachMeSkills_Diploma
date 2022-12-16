@@ -1,31 +1,27 @@
 import React, { useCallback, useState } from "react";
 
-import {
-  GetPostResponse,
-  GetUserResponse,
-  useGetCommentsByPostId,
-} from "../../api";
+import { PostDto, useGetCommentsByPostId } from "../../api";
 import { Spinner } from "../spinner";
-import { useRecursiveComments } from "./use-recursive-comments";
+import { CommentsButton } from "./comments-button";
+import { useComments } from "./use-comments";
 
 interface CommentsSectionProps {
-  post?: GetPostResponse;
-  users: Record<number, GetUserResponse>;
+  post?: PostDto;
 }
 
-export const CommentsSection = ({ post, users }: CommentsSectionProps) => {
-  const [showComments, setShowComments] = useState(false);
-  const buttonMessage = showComments ? "Hide" : "Show"; //make separate file for all strings
+export const CommentsSection = ({ post }: CommentsSectionProps) => {
+  const [isCommentsVisible, setIsCommentsVisible] = useState(false);
+
   const {
     data,
     isLoading,
     refetch: refetchComments,
   } = useGetCommentsByPostId(post?.id);
 
-  const { comments } = useRecursiveComments(data, users);
+  const { comments } = useComments(data);
 
   const handleCLick = useCallback(() => {
-    setShowComments((prevState) => !prevState);
+    setIsCommentsVisible((prevState) => !prevState);
     refetchComments();
   }, [post?.id]);
 
@@ -35,10 +31,19 @@ export const CommentsSection = ({ post, users }: CommentsSectionProps) => {
 
   return (
     <div>
-      <button
+      <CommentsButton
+        isCommentsVisible={isCommentsVisible}
+        commentsCount={post?.commentsCount}
         onClick={handleCLick}
-      >{`${buttonMessage} comments (${post?.commentsCount})`}</button>
-      {showComments && <div>{comments}</div>}
+      />
+      <span>{post?.creationDate.toString()}</span>
+      {isCommentsVisible && <div>{comments}</div>}
     </div>
   );
 };
+
+//проблемы
+
+//1 не грузит юзеров которые участвуют в комментах, но не в постах
+//2 дохера лишних методов на БЕ
+//3 пагинация

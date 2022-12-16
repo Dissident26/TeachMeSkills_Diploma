@@ -84,7 +84,10 @@ namespace Services.DbServices
         {
             return await _dbContext.Comments
                 .Where(comment => comment.PostId == postId)
-                .Select(comment => new CommentDto(comment)).ToListAsync();
+                .Select(comment => new CommentDto(comment)
+                {
+                    User = new UserDto(comment.User),
+                }).ToListAsync();
         }
 
         public async Task<CommentDto> Update(CommentDto newModel)

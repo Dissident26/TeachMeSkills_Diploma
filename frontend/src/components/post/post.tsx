@@ -1,27 +1,22 @@
 import React, { FunctionComponent } from "react";
 
-import { GetPostResponse, GetUserResponse } from "../../api";
+import { PostDto } from "../../api";
 import { CommentsSection } from "../comment";
 import { UserSection } from "../user";
 
 import styles from "./styles.module.scss";
 
 interface PostProps {
-  post: GetPostResponse;
-  users: Record<number, GetUserResponse>;
+  post: PostDto;
 }
 
-export const Post: FunctionComponent<PostProps> = ({
-  post,
-  users,
-}: PostProps) => {
+export const Post: FunctionComponent<PostProps> = ({ post }: PostProps) => {
   return (
     <div className={styles.container}>
       <div key={post.id}>
-        <UserSection user={users[post.userId]} />
+        <UserSection user={post.user} />
         <p>{post.content}</p>
-        <p>Created: {post.creationDate.toString()}</p>
-        <CommentsSection post={post} users={users} />
+        <CommentsSection post={post} />
       </div>
     </div>
   );

@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from "react";
-import { GetUserResponse } from "../../api";
+import { UserDto } from "../../api";
 
 import styles from "./styles.module.scss";
 
 interface UserSectionProps {
-  user?: GetUserResponse;
+  user?: UserDto;
 }
 
 export const UserSection: FunctionComponent<UserSectionProps> = ({

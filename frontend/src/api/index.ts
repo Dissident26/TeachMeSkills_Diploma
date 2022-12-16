@@ -1,4 +1,4 @@
 export * from "./queries";
 export * from "./requests";
-export * from "./response-models";
+export * from "./dtos";
 export * from "./api";
