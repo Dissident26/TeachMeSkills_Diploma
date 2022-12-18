@@ -93,7 +93,7 @@ namespace Services.DbServices
             }
 
             entity.Name = newModel.Name;
-            entity.Email = newModel.Email;
+            entity.Avatar = newModel.Avatar;
 
             await _dbContext.SaveChangesAsync();
 

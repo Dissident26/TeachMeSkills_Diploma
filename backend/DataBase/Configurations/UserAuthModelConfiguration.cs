@@ -10,7 +10,7 @@ namespace DataBase.Configurations
         public void Configure(EntityTypeBuilder<UserAuthModel> builder)
         {
             builder.HasKey(userAuthModel => userAuthModel.Id);
-            builder.HasIndex(userAuthModel => userAuthModel.Email).IsUnique();
+            builder.HasIndex(userAuthModel => userAuthModel.Name).IsUnique();
             builder.HasOne(userAuthModel => userAuthModel.User)
                 .WithOne(user => user.UserAuthModel)
                 .HasForeignKey<UserAuthModel>(userAuthModel => userAuthModel.UserId);

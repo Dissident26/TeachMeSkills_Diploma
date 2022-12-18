@@ -1,9 +1,11 @@
 import React, { useCallback, useState } from "react";
 
 import { PostDto, useGetCommentsByPostId } from "../../api";
-import { Spinner } from "../spinner";
+import { DateSection, Link, Spinner } from "..";
 import { CommentsButton } from "./comments-button";
 import { useComments } from "./use-comments";
+
+import styles from "./styles.module.scss";
 
 interface CommentsSectionProps {
   post?: PostDto;
@@ -36,14 +38,9 @@ export const CommentsSection = ({ post }: CommentsSectionProps) => {
         commentsCount={post?.commentsCount}
         onClick={handleCLick}
       />
-      <span>{post?.creationDate.toString()}</span>
+      <Link to={`post/${post?.id}`}>link</Link>
+      <DateSection date={post?.creationDate} />
       {isCommentsVisible && <div>{comments}</div>}
     </div>
   );
 };
-
-//проблемы
-
-//1 не грузит юзеров которые участвуют в комментах, но не в постах
-//2 дохера лишних методов на БЕ
-//3 пагинация

@@ -6,7 +6,7 @@ import { LOCAL_STORAGE_JWT_TOKEN_KEY } from "../../constants";
 
 import styles from "./styles.module.scss";
 
-const EMAIL_INPUT_NAME = "Email";
+const EMAIL_INPUT_NAME = "Name";
 const PASSWORD_INPUT_NAME = "Password";
 
 export const SignInForm = () => {
@@ -18,7 +18,7 @@ export const SignInForm = () => {
   return (
     <div className={styles.formContainer}>
       <Form onSubmit={onSubmit}>
-        <Input name={EMAIL_INPUT_NAME} required label={"email"} />
+        <Input name={EMAIL_INPUT_NAME} required label={"name"} />
         <Input name={PASSWORD_INPUT_NAME} required label={"password"} />
         <SubmitButton />
       </Form>

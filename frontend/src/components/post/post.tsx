@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 
 import { PostDto } from "../../api";
 import { CommentsSection } from "../comment";
-import { UserSection } from "../user";
+import { UserSection } from "../user-section";
 
 import styles from "./styles.module.scss";
 

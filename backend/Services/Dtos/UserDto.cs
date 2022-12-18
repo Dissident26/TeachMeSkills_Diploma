@@ -7,14 +7,14 @@ namespace Services.Dtos
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Email { get; set; }
+        public string Avatar { get; set; }
         public DateTime RegistrationDate { get; set; }
         public UserDto() { }
         public UserDto(User entity)
         {
             Id = entity.Id;
             Name = entity.Name;
-            Email = entity.Email;
+            Avatar = entity.Avatar;
             RegistrationDate = entity.RegistrationDate;
         }
         public User MapToEntity()
@@ -23,7 +23,7 @@ namespace Services.Dtos
             {
                 Id = Id,
                 Name = Name,
-                Email = Email,
+                Avatar = Avatar,
                 RegistrationDate = RegistrationDate
             };
         }

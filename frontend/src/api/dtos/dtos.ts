@@ -1,6 +1,7 @@
 export interface UserDto {
   id: number;
   name: string;
+  avatar?: string;
   registrationDate: Date;
 }
 export type UserListDto = UserDto[];
@@ -27,6 +28,6 @@ export interface CommentDto {
 export type CommentListDto = CommentDto[];
 
 export interface UserAuthRequestDto {
-  email: string;
+  name: string;
   password: string;
 }

@@ -11,10 +11,9 @@ namespace DataBase.Configurations
         {
             builder.HasKey(user => user.Id);
             builder.Property(user => user.Name).HasMaxLength(100).IsRequired();
-            builder.Property(user => user.Email).HasMaxLength(100).IsRequired();
+            builder.Property(user => user.Avatar);
             builder.HasIndex(user => user.Name).IsUnique();
-            builder.HasIndex(user => user.Email).IsUnique();
-            builder.HasIndex(user => user.RegistrationDate).IsUnique();
+            builder.Property(user => user.RegistrationDate);
             builder.HasMany(user => user.Comments)
                 .WithOne(comment => comment.User)
                 .HasForeignKey(comment => comment.UserId)

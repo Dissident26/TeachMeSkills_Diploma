@@ -7,11 +7,11 @@ import { Comment } from ".";
 export const useComments = (comments?: CommentListDto) => {
   const addRepliedComments = (comment: CommentDto) => {
     if (!comment?.repliedComments) {
-      return <Comment user={comment.user} comment={comment} />;
+      return <Comment key={comment.id} user={comment.user} comment={comment} />;
     }
 
     return (
-      <Comment user={comment.user} comment={comment}>
+      <Comment key={comment.id} user={comment.user} comment={comment}>
         {comment?.repliedComments.map((comment) => addRepliedComments(comment))}
       </Comment>
     );

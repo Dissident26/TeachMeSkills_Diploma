@@ -14,7 +14,7 @@ export const Main: FunctionComponent = () => {
   return (
     <div className={styles.container}>
       {posts?.map((post: PostDto) => (
-        <Post post={post} />
+        <Post key={post.id} post={post} />
       ))}
     </div>
   );

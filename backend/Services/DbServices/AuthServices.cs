@@ -28,7 +28,7 @@ namespace Services.DbServices
                 throw new UserNotFoundException();  //add text??
             }
 
-            entity.Email = newModel.Email;
+            entity.Name = newModel.Name;
             entity.Password = newModel.Password;
 
             await _dbContext.SaveChangesAsync();
@@ -50,7 +50,7 @@ namespace Services.DbServices
         {
             var entity = await _dbContext.AuthorisedUsers
                 .AsNoTracking()
-                .SingleOrDefaultAsync(entity => entity.Email == email && entity.Password == password);
+                .SingleOrDefaultAsync(entity => entity.Name == email && entity.Password == password);
 
             if(entity is null)
             {

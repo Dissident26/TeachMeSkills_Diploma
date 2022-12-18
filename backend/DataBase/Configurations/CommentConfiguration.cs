@@ -12,7 +12,6 @@ namespace DataBase.Configurations
             builder.HasKey(comment => comment.Id);
             builder.Property(comment => comment.Content).IsRequired();
             builder.Property(comment => comment.CreationDate).IsRequired();
-
             builder.HasMany(comment => comment.Comments)
                .WithMany(comment => comment.Replies)
                .UsingEntity<RepliedComment>(

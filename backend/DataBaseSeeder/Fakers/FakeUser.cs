@@ -9,7 +9,7 @@ namespace DataBaseSeeder.Fakers
     {
         private readonly Faker<UserDto> _user = new Faker<UserDto>()
                 .RuleFor(user => user.Name, (f, u) => f.Internet.UserName())
-                .RuleFor(user => user.Email, (f, u) => f.Internet.Email(u.Name))
+                .RuleFor(user => user.Avatar, (f, u) => f.Internet.Avatar())
                 .RuleFor(user => user.RegistrationDate, f => f.Date.Recent());
         public List<UserDto> Generate(int amount)
         {

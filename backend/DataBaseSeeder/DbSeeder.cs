@@ -16,12 +16,13 @@ namespace DataBaseSeeder
 
         public async Task Seed(int numberOfPosts)
         {
+            var numberOfComments = numberOfPosts * 10;
             var usersIds = await SeedUsers(100);
             var tagsIds = await SeedTags(50);
             var postsIds = await SeedPosts(numberOfPosts, usersIds);
             await SeedPostTags(numberOfPosts, postsIds, tagsIds);
-            var comments = await SeedComments(500, usersIds, postsIds);
-            await SeedRepliedComments(500, postsIds, comments);
+            var comments = await SeedComments(numberOfComments, usersIds, postsIds);
+            await SeedRepliedComments(numberOfComments / 2, postsIds, comments);
         }
         private async Task<int[]> SeedUsers(int amount)
         {
@@ -77,7 +78,7 @@ namespace DataBaseSeeder
             var repliedComments = fakeCommentModel.Generate(amount);
 
             var commentsServices = new RepliedCommentServices(_dbContext);
-            var createdComments = await commentsServices.Create(repliedComments);
+            await commentsServices.Create(repliedComments);
         }
     }
 }

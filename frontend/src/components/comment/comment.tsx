@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { CommentDto, UserDto } from "../../api";
-import { UserSection } from "../user";
+import { UserSection, DateSection } from "..";
 
 import styles from "./styles.module.scss";
 
@@ -14,9 +14,11 @@ export const Comment = ({ comment, user, children }: CommentProps) => {
   return (
     <>
       <div className={styles.container}>
-        <div>{comment?.content}</div>
-        <div>{comment?.creationDate.toString()}</div>
-        <UserSection user={user} />
+        <div className={styles.content}>{comment?.content}</div>
+        <div className={styles.info}>
+          <UserSection user={user} avatarSize="30px" />
+          <DateSection date={comment?.creationDate} />
+        </div>
       </div>
       <div className={styles.childrenContainer}>{children}</div>
     </>
