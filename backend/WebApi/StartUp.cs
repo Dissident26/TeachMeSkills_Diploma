@@ -41,7 +41,6 @@ namespace WebApi
             app.UseRouting();
             app.UseHttpsRedirection();
             app.UseAuthorization();
-
             //midleware
 
             app.UseEndpoints(endpoints =>

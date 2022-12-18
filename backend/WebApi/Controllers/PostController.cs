@@ -31,9 +31,6 @@ namespace WebApi
         [Route(RouteConstants.GetList)]
         public async Task<List<PostDto>> GetPostsList()
         {
-            var asd = Request.Headers;
-            var dsa = JwtToken.GetUserIdFromToken(asd);
-            Console.WriteLine($"********* USER ID = {dsa}");
             return await _postServices.GetList();
         }
         [HttpPost]
