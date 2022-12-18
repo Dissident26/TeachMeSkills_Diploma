@@ -2,6 +2,7 @@ const BASE_URLS = {
   POST: "Post",
   USER: "User",
   COMMENT: "Comment",
+  AUTH: "Auth",
 };
 
 export const urls = {
@@ -15,5 +16,8 @@ export const urls = {
   },
   Comment: {
     GetListByPostId: `${BASE_URLS.COMMENT}/GetById`,
+  },
+  Authorization: {
+    SignIn: `${BASE_URLS.AUTH}/SingIn`,
   },
 };

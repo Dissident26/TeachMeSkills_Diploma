@@ -3,6 +3,7 @@ using Services.Models;
 using Services.Dtos;
 using Services.Interfaces;
 using WebApi.Constants;
+using Authentication.Helpers;
 
 namespace WebApi
 {
@@ -21,7 +22,7 @@ namespace WebApi
             return await _postServices.Get(id);
         }
         [HttpPost]
-        [Route(RouteConstants.GetById)]
+        [Route(RouteConstants.PostById)]
         public async Task<List<PostDto>> GetPost([FromBody] GetByIdsRequest request)
         {
             return await _postServices.Get(request.Ids);
@@ -30,6 +31,9 @@ namespace WebApi
         [Route(RouteConstants.GetList)]
         public async Task<List<PostDto>> GetPostsList()
         {
+            var asd = Request.Headers;
+            var dsa = JwtToken.GetUserIdFromToken(asd);
+            Console.WriteLine($"********* USER ID = {dsa}");
             return await _postServices.GetList();
         }
         [HttpPost]

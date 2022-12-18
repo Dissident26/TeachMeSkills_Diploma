@@ -4,7 +4,6 @@ using DataBase.Contexts;
 using Services.Dtos;
 using Services.Interfaces;
 using Services.Exceptions;
-using Models.Entities;
 
 namespace Services.DbServices
 {

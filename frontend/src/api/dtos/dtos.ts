@@ -25,3 +25,8 @@ export interface CommentDto {
   creationDate: Date;
 }
 export type CommentListDto = CommentDto[];
+
+export interface UserAuthRequestDto {
+  email: string;
+  password: string;
+}

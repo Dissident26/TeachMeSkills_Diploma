@@ -19,5 +19,19 @@ namespace Authentication.Options
         {
             return new SymmetricSecurityKey(Encoding.UTF8.GetBytes(KEY));
         }
+
+        public static TokenValidationParameters GetTokenValidationParameters()
+        {
+            return new TokenValidationParameters()
+            {
+                ValidateIssuer = ValidateIssuer,
+                ValidateAudience = ValidateAudience,
+                ValidateLifetime = ValidateLifetime,
+                ValidateIssuerSigningKey = ValidateIssuerSigningKey,
+                ValidIssuer = ValidIssuer,
+                ValidAudience = ValidAudience,
+                IssuerSigningKey = GetSymmetricSecurityKey(),
+            };
+        }
     }
 }

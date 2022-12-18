@@ -1,4 +1,6 @@
-﻿using Services.Extentions;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Services.Extentions;
+using Authentication.Options;
 
 namespace WebApi
 {
@@ -15,6 +17,11 @@ namespace WebApi
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             services.AddDbServices();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = AuthOptions.GetTokenValidationParameters();
+                });
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -24,16 +31,17 @@ namespace WebApi
                 app.UseSwaggerUI();
                 app.UseDeveloperExceptionPage();
             }
-            app.UseCors((p) =>
+            app.UseCors((policy) =>
             {
-                p.AllowAnyOrigin();
-                p.AllowAnyMethod();
-                p.AllowAnyHeader();
+                policy.AllowAnyOrigin();
+                policy.AllowAnyMethod();
+                policy.AllowAnyHeader();
             });
             app.UseStaticFiles();
             app.UseRouting();
             app.UseHttpsRedirection();
             app.UseAuthorization();
+
             //midleware
 
             app.UseEndpoints(endpoints =>

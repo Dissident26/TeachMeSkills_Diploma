@@ -22,20 +22,10 @@ namespace WebApi.Controllers
         [Route(RouteConstants.SingIn)]
         public async Task<string> AuthorizeUser(UserAuthModelDto userAuthModel)
         {
-
-            // how to make queries from here?
-            // user #3 //Kristina3879@gmail.com // Kristina38
-
-            var user = await _authServices.ValidateUser("Kristina3879@gmail.com", "Kristina38");
-            List<Claim> claims = new() { new Claim(AuthConstants.ClaimType, user.Id.ToString()) };
+            var user = await _authServices.ValidateUser("Izaiah3988@hotmail.com", "Izaiah39");
+            List<Claim> claims = new() { new Claim(AuthConstants.ClaimType, user.Id.ToString()) };//???
             var token = JwtToken.GetToken(claims);
             var encodedToken = new JwtSecurityTokenHandler().WriteToken(token);
-            var response = new
-            {   //миша всё хуйня, давай по новой
-                // jwt в мвц это хуйня
-                Token = encodedToken,
-                User = user
-            };
 
             return encodedToken;
         }
