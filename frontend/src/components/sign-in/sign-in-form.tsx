@@ -12,7 +12,7 @@ const PASSWORD_INPUT_NAME = "Password";
 export const SignInForm = () => {
   const onSubmit = useCallback(async (data: UserAuthRequestDto) => {
     const token = await authUser(data);
-    await localStorage.setItem(LOCAL_STORAGE_JWT_TOKEN_KEY, "Bearer " + token);
+    localStorage.setItem(LOCAL_STORAGE_JWT_TOKEN_KEY, "Bearer " + token);
   }, []);
 
   return (

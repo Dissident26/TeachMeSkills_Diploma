@@ -6,3 +6,4 @@ export * from "./post";
 export * from "./spinner";
 export * from "./sign-in";
 export * from "./form-components";
+export * from "./link";
