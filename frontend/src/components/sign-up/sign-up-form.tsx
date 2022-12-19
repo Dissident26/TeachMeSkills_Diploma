@@ -1,18 +1,24 @@
 import React, { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Form, Input, SubmitButton } from "../";
-import { signIn, UserAuthRequestDto } from "../../api";
-import { LOCAL_STORAGE_JWT_TOKEN_KEY } from "../../constants";
+import { signUp, UserAuthRequestDto } from "../../api";
+import { routes } from "../../routes";
 
 import styles from "./styles.module.scss";
+
+interface UserSignUpData extends UserAuthRequestDto {
+  confirmPassword: string;
+}
 
 const LOGIN_INPUT_NAME = "Name";
 const PASSWORD_INPUT_NAME = "Password";
 
-export const SignInForm = () => {
+export const SignUpForm = () => {
+  const navigate = useNavigate();
   const onSubmit = useCallback(async (data: UserAuthRequestDto) => {
-    const token = await signIn(data);
-    localStorage.setItem(LOCAL_STORAGE_JWT_TOKEN_KEY, "Bearer " + token);
+    await signUp(data);
+    navigate(routes.auth.signIn);
   }, []);
 
   return (

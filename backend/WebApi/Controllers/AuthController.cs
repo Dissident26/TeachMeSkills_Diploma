@@ -14,20 +14,36 @@ namespace WebApi.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthServices _authServices;
-        public AuthController(IAuthServices authServices)
+        private readonly IUserServices _userServices;
+        public AuthController(IAuthServices authServices, IUserServices userServices)
         {
             _authServices = authServices;
+            _userServices = userServices;
         }
         [HttpPost]
         [Route(RouteConstants.SingIn)]
-        public async Task<string> AuthorizeUser(UserAuthModelDto userAuthModel)
+        public async Task<string> SignIn(UserAuthModelDto userAuthModel)
         {
-            var user = await _authServices.ValidateUser("Izaiah3988@hotmail.com", "Izaiah39");
+            var user = await _authServices.ValidateUser(userAuthModel);
             List<Claim> claims = new() { new Claim(AuthConstants.ClaimType, user.Id.ToString()) };//???
             var token = JwtToken.GetToken(claims);
             var encodedToken = new JwtSecurityTokenHandler().WriteToken(token);
 
             return encodedToken;
+        }
+        [HttpPost]
+        [Route(RouteConstants.SingUp)]
+        public async Task SignUp(UserAuthModelDto userAuthModel)
+        {
+            var user = await _userServices.Create(new UserDto
+            {
+                Name = userAuthModel.Name,
+                RegistrationDate = DateTime.Now
+            });
+
+            userAuthModel.UserId = user.Id;
+
+            await _authServices.Create(userAuthModel);
         }
     }
 }

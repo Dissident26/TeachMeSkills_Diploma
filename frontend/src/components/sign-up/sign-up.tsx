@@ -1,13 +1,14 @@
 import React from "react";
-import { SignInForm } from "./sign-in-form";
+
+import { SignUpForm } from "./sign-up-form";
 
 import styles from "./styles.module.scss";
 
-export const SignIn = () => {
+export const SignUp = () => {
   return (
     <div className={styles.container}>
-      <h2>Sign In</h2>
-      <SignInForm />
+      <h2>Sign Up</h2>
+      <SignUpForm />
     </div>
   );
 };

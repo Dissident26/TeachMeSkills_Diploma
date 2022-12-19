@@ -10,5 +10,6 @@
         public const string Update = "/[controller]/Update";
         public const string Delete = "/[controller]/Delete/{id}";
         public const string SingIn = "/[controller]/SingIn";
+        public const string SingUp = "/[controller]/SingUp";
     }
 }

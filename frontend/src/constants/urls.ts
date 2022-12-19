@@ -19,5 +19,6 @@ export const urls = {
   },
   Authorization: {
     SignIn: `${BASE_URLS.AUTH}/SingIn`,
+    SignUp: `${BASE_URLS.AUTH}/SingUp`,
   },
 };

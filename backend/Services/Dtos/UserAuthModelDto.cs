@@ -16,7 +16,7 @@ namespace Services.Dtos
                 Id = Id,
                 Name = Name,
                 Password = Password,
-                UserId = UserId
+                UserId = UserId,
             };
         }
     }

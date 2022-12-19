@@ -10,3 +10,4 @@ export * from "./link";
 export * from "./user-section";
 export * from "./date-section";
 export * from "./spinner";
+export * from "./sign-up";

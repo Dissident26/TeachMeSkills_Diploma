@@ -7,6 +7,6 @@ namespace Services.Interfaces
         public Task Create(UserAuthModelDto model);
         public Task Update(UserAuthModelDto newModel);
         public Task Delete(int id);
-        public Task<UserDto> ValidateUser(string email, string password);
+        public Task<UserDto> ValidateUser(UserAuthModelDto userAuthModel);
     }
 }

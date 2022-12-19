@@ -46,11 +46,11 @@ namespace Services.DbServices
 
             await _dbContext.SaveChangesAsync();
         }
-        public async Task<UserDto> ValidateUser(string email, string password)
+        public async Task<UserDto> ValidateUser(UserAuthModelDto userAuthModel)
         {
             var entity = await _dbContext.AuthorisedUsers
                 .AsNoTracking()
-                .SingleOrDefaultAsync(entity => entity.Name == email && entity.Password == password);
+                .SingleOrDefaultAsync(entity => entity.Name == userAuthModel.Name && entity.Password == userAuthModel.Password);
 
             if(entity is null)
             {

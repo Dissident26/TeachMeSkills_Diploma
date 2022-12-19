@@ -23,7 +23,7 @@ namespace WebApi
 
         [HttpPost]
         [Route(RouteConstants.PostById)]
-        public async Task<List<UserDto>> GetUser([FromBody] GetByIdsRequest request)
+        public async Task<List<UserDto>> GetUser(GetByIdsRequest request)
         {
             return await _userServices.Get(request.Ids);
         }
@@ -35,13 +35,14 @@ namespace WebApi
         }
         [HttpPost]
         [Route(RouteConstants.Add)]
-        public async Task<UserDto> AddUser([FromBody] UserDto user)
+        public async Task<UserDto> AddUser(UserDto user)
         {
+
             return await _userServices.Create(user);
         }
         [HttpPut]
         [Route(RouteConstants.Update)]
-        public async Task<UserDto> UpdateUser([FromBody] UserDto user)
+        public async Task<UserDto> UpdateUser(UserDto user)
         {
             return await _userServices.Update(user);
         }

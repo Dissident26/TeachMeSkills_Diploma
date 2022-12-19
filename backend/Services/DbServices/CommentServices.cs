@@ -43,11 +43,6 @@ namespace Services.DbServices
                 throw new CommentNotFoundException();  //add text??
             }
 
-            //await _dbContext.Comments
-            //    .Where(comment => comment.RepliedCommentId == id)
-            //    .ExecuteUpdateAsync(s =>
-            //        s.SetProperty(comment => comment.RepliedCommentId, comment => null));
-
             _dbContext.Comments.Remove(entity);
 
             await _dbContext.SaveChangesAsync();
