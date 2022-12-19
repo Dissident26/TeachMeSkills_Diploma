@@ -10,7 +10,7 @@ namespace Authentication.Constants
         public const string Audience = "AUDIENCE";
         public const string ClaimType = "UserId";
         public const string AuthHeaderName = "Authorization";
-        public const string TokenPrefix = "Bearer";
+        public const string TokenPrefix = "Bearer ";
         public static DateTime? GetTokenExpirationDate()
         {
             return DateTime.UtcNow.Add(TimeSpan.FromDays(1));

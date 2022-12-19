@@ -45,5 +45,12 @@ namespace WebApi.Controllers
 
             await _authServices.Create(userAuthModel);
         }
+        [HttpGet]
+        [Route(RouteConstants.GetByToken)]
+        public async Task<UserDto> GetUserByToken()
+        {
+            int userId = JwtToken.GetUserIdFromToken(Request.Headers);
+            return await _userServices.Get(userId);
+        }
     }
 }

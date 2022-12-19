@@ -34,7 +34,9 @@ namespace Authentication.Helpers
                 throw new Exception(); // ???
             }
 
-            return handler.ReadJwtToken(authHeader?.Substring(AuthConstants.TokenPrefix.Length)); //??
+            var truncatedToken = authHeader?.Substring(AuthConstants.TokenPrefix.Length);
+
+            return handler.ReadJwtToken(truncatedToken); //??
         }
     }
 }

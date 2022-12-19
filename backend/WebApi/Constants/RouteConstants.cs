@@ -11,5 +11,6 @@
         public const string Delete = "/[controller]/Delete/{id}";
         public const string SingIn = "/[controller]/SingIn";
         public const string SingUp = "/[controller]/SingUp";
+        public const string GetByToken = "/[controller]/GetByToken";
     }
 }

@@ -4,4 +4,5 @@ export enum queryKeys {
   GetUser = "GetUser",
   GetUsersByIds = "GetUsersByIds",
   GetCommentsByPostId = "GetCommentsByPostId",
+  GetUserByToken = "GetUserByToken",
 }

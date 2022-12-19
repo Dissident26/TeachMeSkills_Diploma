@@ -6,19 +6,20 @@ const BASE_URLS = {
 };
 
 export const urls = {
-  Post: {
-    Get: `${BASE_URLS.POST}`,
-    GetList: `${BASE_URLS.POST}/List`,
+  post: {
+    get: `${BASE_URLS.POST}`,
+    getList: `${BASE_URLS.POST}/List`,
   },
-  User: {
-    Get: `${BASE_URLS.USER}`,
-    GetByIds: `${BASE_URLS.USER}/GetById`,
+  user: {
+    get: `${BASE_URLS.USER}`,
+    getByIds: `${BASE_URLS.USER}/GetById`,
   },
-  Comment: {
-    GetListByPostId: `${BASE_URLS.COMMENT}/GetById`,
+  comment: {
+    getListByPostId: `${BASE_URLS.COMMENT}/GetById`,
   },
-  Authorization: {
-    SignIn: `${BASE_URLS.AUTH}/SingIn`,
-    SignUp: `${BASE_URLS.AUTH}/SingUp`,
+  authorization: {
+    signIn: `${BASE_URLS.AUTH}/SingIn`,
+    signUp: `${BASE_URLS.AUTH}/SingUp`,
+    getByToken: `${BASE_URLS.AUTH}/GetByToken`,
   },
 };

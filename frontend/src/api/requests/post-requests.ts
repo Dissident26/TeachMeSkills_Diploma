@@ -3,13 +3,13 @@ import { api } from "../api";
 import { PostListDto, PostDto } from "../dtos";
 
 export const getPostsList = async (): Promise<PostListDto> => {
-  const response = await api.get(urls.Post.GetList);
+  const response = await api.get(urls.post.getList);
 
   return response.data;
 };
 
 export const getPost = async (id: number): Promise<PostDto> => {
-  const response = await api.get(`${urls.Post.Get}/${id}`);
+  const response = await api.get(`${urls.post.get}/${id}`);
 
   return response.data;
 };
