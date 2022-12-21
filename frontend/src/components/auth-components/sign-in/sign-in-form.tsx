@@ -1,11 +1,11 @@
 import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Form, Input, SubmitButton } from "../";
-import { signIn, UserAuthRequestDto } from "../../api";
-import { LOCAL_STORAGE_JWT_TOKEN_KEY } from "../../constants";
-import { useLocalStorage } from "../../hooks/use-local-storage";
-import { routes } from "../../routes";
+import { Form, Input, SubmitButton } from "../..";
+import { signIn, UserAuthRequestDto } from "../../../api";
+import { LOCAL_STORAGE_JWT_TOKEN_KEY } from "../../../constants";
+import { useLocalStorage } from "../../../hooks/use-local-storage";
+import { routes } from "../../../routes";
 
 import styles from "./styles.module.scss";
 

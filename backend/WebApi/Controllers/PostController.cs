@@ -51,5 +51,12 @@ namespace WebApi
         {
             return await _postServices.Delete(id);
         }
+        [HttpGet]
+        [Route(RouteConstants.GetPostListByTag)]
+        public async Task<List<PostDto>> GetPostsByTagId(int id)
+        {
+            return await _postServices.GetPostsByTagId(id);
+        }
+        
     }
 }

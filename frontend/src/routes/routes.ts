@@ -10,5 +10,6 @@ export const routes = {
   },
   post: {
     get: "/post/:id",
+    byTag: "/post/tag/:id",
   },
 };

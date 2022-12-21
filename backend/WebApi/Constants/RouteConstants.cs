@@ -12,5 +12,6 @@
         public const string SingIn = "/[controller]/SingIn";
         public const string SingUp = "/[controller]/SingUp";
         public const string GetByToken = "/[controller]/GetByToken";
+        public const string GetPostListByTag = "/[controller]/GetPostListByTag/{id}";
     }
 }

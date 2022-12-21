@@ -10,6 +10,7 @@ export const urls = {
   post: {
     get: `${BASE_URLS.POST}`,
     getList: `${BASE_URLS.POST}/list`,
+    getPostListByTag: `${BASE_URLS.POST}/getPostListByTag`,
   },
   user: {
     get: `${BASE_URLS.USER}`,

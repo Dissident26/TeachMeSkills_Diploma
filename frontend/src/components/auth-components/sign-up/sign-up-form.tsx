@@ -1,15 +1,11 @@
 import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Form, Input, SubmitButton } from "../";
-import { signUp, UserAuthRequestDto } from "../../api";
-import { routes } from "../../routes";
+import { Form, Input, SubmitButton } from "../../";
+import { signUp, UserAuthRequestDto } from "../../../api";
+import { routes } from "../../../routes";
 
 import styles from "./styles.module.scss";
-
-interface UserSignUpData extends UserAuthRequestDto {
-  confirmPassword: string;
-}
 
 const LOGIN_INPUT_NAME = "Name";
 const PASSWORD_INPUT_NAME = "Password";

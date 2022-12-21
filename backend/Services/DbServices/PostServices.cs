@@ -103,5 +103,17 @@ namespace Services.DbServices
 
             return new PostDto(entity);
         }
+        public async Task<List<PostDto>> GetPostsByTagId(int id)
+        {
+            return await _dbContext.Posts
+                .AsNoTracking()
+                .Where(post => post.Tags.Any(tag => tag.Id == id))
+                .Select(post => new PostDto(post)
+                {
+                    User = new UserDto(post.User),
+                    CommentsCount = post.Comments.Count(),
+                    Tags = post.Tags.Select(tag => new TagDto(tag)).ToList()
+                }).ToListAsync();
+        }
     }
 }
