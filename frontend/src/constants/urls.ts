@@ -1,25 +1,29 @@
 const BASE_URLS = {
-  POST: "Post",
-  USER: "User",
-  COMMENT: "Comment",
-  AUTH: "Auth",
+  POST: "post",
+  USER: "user",
+  COMMENT: "comment",
+  AUTH: "auth",
+  TAG: "tag",
 };
 
 export const urls = {
   post: {
     get: `${BASE_URLS.POST}`,
-    getList: `${BASE_URLS.POST}/List`,
+    getList: `${BASE_URLS.POST}/list`,
   },
   user: {
     get: `${BASE_URLS.USER}`,
-    getByIds: `${BASE_URLS.USER}/GetById`,
+    getByIds: `${BASE_URLS.USER}/getById`,
   },
   comment: {
-    getListByPostId: `${BASE_URLS.COMMENT}/GetById`,
+    getListByPostId: `${BASE_URLS.COMMENT}/getById`,
   },
   authorization: {
-    signIn: `${BASE_URLS.AUTH}/SingIn`,
-    signUp: `${BASE_URLS.AUTH}/SingUp`,
-    getByToken: `${BASE_URLS.AUTH}/GetByToken`,
+    signIn: `${BASE_URLS.AUTH}/singIn`,
+    signUp: `${BASE_URLS.AUTH}/singUp`,
+    getByToken: `${BASE_URLS.AUTH}/getByToken`,
+  },
+  tag: {
+    get: `${BASE_URLS.TAG}`,
   },
 };

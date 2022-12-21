@@ -3,6 +3,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import styles from "./styles.module.scss";
 
 export interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
+  onSubmit: (data: any) => Promise<void>;
   defaultValues?: any;
   children?: ReactElement[];
 }

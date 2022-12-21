@@ -4,6 +4,7 @@ using DataBase.Contexts;
 using Services.Dtos;
 using Services.Interfaces;
 using Services.Exceptions;
+using System.Net;
 
 namespace Services.DbServices
 {
@@ -14,7 +15,6 @@ namespace Services.DbServices
         {
             _dbContext = context;
         }
-
         public async Task<CommentDto> Create(CommentDto model)
         {
             var entity = model.MapToEntity();

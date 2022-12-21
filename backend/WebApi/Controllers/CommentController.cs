@@ -4,6 +4,8 @@ using Services.Dtos;
 using Services.Interfaces;
 using WebApi.Constants;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace WebApi
 {
@@ -62,6 +64,7 @@ namespace WebApi
         }
         [HttpPost]
         [Route(RouteConstants.Add)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<CommentDto> AddComment([FromBody] CommentDto comment)
         {
             return await _commentServices.Create(comment);

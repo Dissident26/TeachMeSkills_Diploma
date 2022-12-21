@@ -20,12 +20,8 @@ export const useLocalStorage = () => {
     console.log("storage", storage);
   }, []);
 
-  //   const onStorageChange = (e: any) => console.log(e);
-
   useEffect(() => {
     window.addEventListener(EVENT_NAME, onStorageChange);
-
-    // return window.removeEventListener(EVENT_NAME, onStorageChange);
   }, []);
 
   const setItem = useCallback((key: string, value: string) => {
@@ -33,5 +29,10 @@ export const useLocalStorage = () => {
     window.dispatchEvent(new Event(EVENT_NAME));
   }, []);
 
-  return { storage, setItem };
+  const removeItem = useCallback((key: string) => {
+    localStorage.removeItem(key);
+    window.dispatchEvent(new Event(EVENT_NAME));
+  }, []);
+
+  return { storage, setItem, removeItem };
 };

@@ -7,6 +7,7 @@ namespace Services.Dtos
     {
         public int Id { get; set; }
         public int? UserId { get; set; }
+        public List<TagDto> Tags { get; set; }
         public UserDto User { get; set; }
         public string Content { get; set; }
         public DateTime CreationDate { get; set; }

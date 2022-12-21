@@ -11,3 +11,5 @@ export * from "./user-section";
 export * from "./date-section";
 export * from "./spinner";
 export * from "./sign-up";
+export * from "./tag-section";
+export * from "./sign-out";

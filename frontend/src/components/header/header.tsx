@@ -19,6 +19,8 @@ export const Header = () => {
     if (token) {
       refetch();
       setUser(data);
+    } else {
+      setUser(null);
     }
   }, [token, data]);
 

@@ -74,7 +74,8 @@ namespace Services.DbServices
             return await _dbContext.Posts
                 .Select(post => new PostDto(post) {
                     User = new UserDto(post.User),
-                    CommentsCount = post.Comments.Count() 
+                    CommentsCount = post.Comments.Count(), 
+                    Tags = post.Tags.Select(tag => new TagDto(tag)).ToList()
                 }).ToListAsync();
         }
 
