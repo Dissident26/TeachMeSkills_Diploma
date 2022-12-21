@@ -5,7 +5,7 @@ import { queryKeys } from "../query-keys";
 
 export const useGetPost = (id?: number) =>
   useQuery({
-    queryKey: [queryKeys.GetPost],
+    queryKey: [queryKeys.GetPost, id],
     queryFn: () => getPost(id),
     enabled: !!id,
   });

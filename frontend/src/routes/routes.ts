@@ -5,4 +5,10 @@ export const routes = {
     signUp: "/sign-up",
     signOut: "/sign-out",
   },
+  user: {
+    get: "/user/:id",
+  },
+  post: {
+    get: "/post/:id",
+  },
 };

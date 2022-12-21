@@ -4,8 +4,8 @@ import { PostDto, useGetCommentsByPostId } from "../../api";
 import { DateSection, Link, Spinner } from "..";
 import { CommentsButton } from "./comments-button";
 import { useComments } from "./use-comments";
-
-import styles from "./styles.module.scss";
+import { generatePath } from "react-router-dom";
+import { routes } from "../../routes";
 
 interface CommentsSectionProps {
   post?: PostDto;
@@ -27,6 +27,10 @@ export const CommentsSection = ({ post }: CommentsSectionProps) => {
     refetchComments();
   }, [post?.id]);
 
+  const pathToPost = generatePath(routes.post.get, {
+    id: post?.id,
+  });
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -38,7 +42,7 @@ export const CommentsSection = ({ post }: CommentsSectionProps) => {
         commentsCount={post?.commentsCount}
         onClick={handleCLick}
       />
-      <Link to={`post/${post?.id}`}>link</Link>
+      <Link to={pathToPost}>link</Link>
       <DateSection date={post?.creationDate} />
       {isCommentsVisible && <div>{comments}</div>}
     </div>

@@ -52,14 +52,22 @@ namespace Services.DbServices
 
         public async Task<PostDto> Get(int id)
         {
-            var post = await _dbContext.Posts.SingleOrDefaultAsync(post => post.Id == id);
+            var post = await _dbContext.Posts
+                .AsNoTracking()
+                .Where(post => post.Id == id).Select(post => new PostDto(post)
+                {
+                    User = new UserDto(post.User),
+                    CommentsCount = post.Comments.Count(),
+                    Tags = post.Tags.Select(tag => new TagDto(tag)).ToList()
+                }
+            ).SingleOrDefaultAsync();
 
             if (post is null)
             {
                 throw new PostNotFoundException();  //add text??
             }
 
-            return new PostDto(post);
+            return post;
         }
 
         public async Task<List<PostDto>> Get(int[] ids)
@@ -72,6 +80,7 @@ namespace Services.DbServices
         public async Task<List<PostDto>> GetList()
         {
             return await _dbContext.Posts
+                .AsNoTracking()
                 .Select(post => new PostDto(post) {
                     User = new UserDto(post.User),
                     CommentsCount = post.Comments.Count(), 

@@ -1,4 +1,5 @@
 import React from "react";
+import { generatePath } from "react-router-dom";
 
 import { Link } from "../..";
 import { useUserProvider } from "../../../contexts";
@@ -8,6 +9,7 @@ import styles from "./styles.module.scss";
 
 export const ToolBar = () => {
   const { user } = useUserProvider();
+  const pathToUser = user && generatePath(routes.user.get, { id: user?.id });
 
   return (
     <div className={styles.container}>
@@ -17,7 +19,7 @@ export const ToolBar = () => {
       <div className={styles.rightSection}>
         {user ? (
           <>
-            <div>{`Hello ${user.name}`}</div>
+            <div>Hello{<Link to={pathToUser}>{user.name}</Link>}</div>
             <Link to={routes.auth.signOut}>Sign out</Link>
           </>
         ) : (

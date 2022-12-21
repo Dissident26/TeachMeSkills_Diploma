@@ -17,7 +17,6 @@ export const useLocalStorage = () => {
   const onStorageChange = useCallback(() => {
     const token = localStorage.getItem(LOCAL_STORAGE_JWT_TOKEN_KEY);
     setStorage((prev) => ({ ...prev, token }));
-    console.log("storage", storage);
   }, []);
 
   useEffect(() => {

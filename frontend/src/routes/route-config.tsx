@@ -1,7 +1,15 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 
-import { Main, Root, SignIn, SignUp, SignOut } from "../components";
+import {
+  Root,
+  SignIn,
+  SignUp,
+  SignOut,
+  User,
+  AllPosts,
+  SinglePost,
+} from "../components";
 import { routes } from "./routes";
 
 export const router = createBrowserRouter([
@@ -11,7 +19,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: routes.root,
-        element: <Main />,
+        element: <AllPosts />,
+      },
+      {
+        path: routes.post.get,
+        element: <SinglePost />,
       },
       {
         path: routes.auth.signIn,
@@ -24,6 +36,10 @@ export const router = createBrowserRouter([
       {
         path: routes.auth.signOut,
         element: <SignOut />,
+      },
+      {
+        path: routes.user.get,
+        element: <User />,
       },
     ],
   },
