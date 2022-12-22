@@ -11,6 +11,7 @@ export const urls = {
     get: `${BASE_URLS.POST}`,
     getList: `${BASE_URLS.POST}/list`,
     getPostListByTag: `${BASE_URLS.POST}/getPostListByTag`,
+    create: `${BASE_URLS.POST}/add`,
   },
   user: {
     get: `${BASE_URLS.USER}`,

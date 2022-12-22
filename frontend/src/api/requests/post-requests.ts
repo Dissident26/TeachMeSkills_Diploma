@@ -19,3 +19,12 @@ export const getPostListByTag = async (id: number): Promise<PostDto[]> => {
 
   return response.data;
 };
+// rework
+export const createPost = async (post: PostDto): Promise<PostDto> => {
+  console.log(post);
+  const response = await api.post(`${urls.post.create}`, {
+    ...post, //лучше возвращать id
+  });
+
+  return response.data;
+};

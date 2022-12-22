@@ -23,7 +23,6 @@ export const Input = ({
     <>
       {label && <label htmlFor={name}>{label}</label>}
       <input
-        className={styles.input}
         {...rest}
         {...register?.(name, { required: "* This field is required" })}
       />

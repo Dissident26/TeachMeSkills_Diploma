@@ -1,11 +1,11 @@
 import { useQuery } from "react-query";
 
 import { getUserByToken } from "../..";
-import { queryKeys } from "../query-keys";
+import { QueryKey } from "../query-key";
 
 export const useGetUserByToken = () =>
   useQuery({
-    queryKey: [queryKeys.GetUserByToken],
+    queryKey: [QueryKey.GetUserByToken],
     queryFn: getUserByToken,
     enabled: false,
   });

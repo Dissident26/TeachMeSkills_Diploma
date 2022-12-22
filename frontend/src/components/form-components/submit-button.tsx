@@ -3,8 +3,7 @@ import { UseFormRegister } from "react-hook-form";
 
 import styles from "./styles.module.scss";
 
-export interface SubmitButtonProps
-  extends InputHTMLAttributes<HTMLInputElement> {
+interface SubmitButtonProps extends InputHTMLAttributes<HTMLInputElement> {
   register?: UseFormRegister<any>;
 }
 

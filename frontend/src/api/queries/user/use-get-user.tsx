@@ -1,11 +1,11 @@
 import { useQuery } from "react-query";
 
 import { getUser } from "../..";
-import { queryKeys } from "../query-keys";
+import { QueryKey } from "../query-key";
 
 export const useGetUser = (id?: number) =>
   useQuery({
-    queryKey: [queryKeys.GetUser, id],
+    queryKey: [QueryKey.GetUser, id],
     queryFn: () => getUser(id),
     enabled: !!id,
   });

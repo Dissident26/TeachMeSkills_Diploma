@@ -35,7 +35,7 @@ namespace WebApi
         }
         [HttpPost]
         [Route(RouteConstants.Add)]
-        public async Task<PostDto> AddPost([FromBody] PostDto post)
+        public async Task<PostDto> AddPost(PostDto post)
         {
             return await _postServices.Create(post);
         }

@@ -1,11 +1,11 @@
 import React from "react";
 import { useQuery } from "react-query";
 import { getCommentsListByPostId } from "../../requests";
-import { queryKeys } from "../query-keys";
+import { QueryKey } from "../query-key";
 
 export const useGetCommentsByPostId = (id?: number) =>
   useQuery({
-    queryKey: [queryKeys.GetCommentsByPostId, id],
+    queryKey: [QueryKey.GetCommentsByPostId, id],
     queryFn: () => getCommentsListByPostId(id),
     enabled: false,
   });

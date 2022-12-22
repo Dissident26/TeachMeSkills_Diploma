@@ -21,6 +21,8 @@
     "experimentalDecorators": true,
     "strictNullChecks": false,
     "noImplicitAny": true,
+    "removeComments": true,
+    "strictFunctionTypes": true
   },
   "include": [ "src", "typings.d.ts" ]
 }
