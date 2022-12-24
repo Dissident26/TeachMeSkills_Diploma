@@ -7,6 +7,7 @@
         public const string PostById = "/[controller]/GetById";
         public const string GetList = "/[controller]/List";
         public const string Add = "/[controller]/Add";
+        public const string AddReply = "/[controller]/AddReply";
         public const string Update = "/[controller]/Update";
         public const string Delete = "/[controller]/Delete/{id}";
         public const string SingIn = "/[controller]/SingIn";

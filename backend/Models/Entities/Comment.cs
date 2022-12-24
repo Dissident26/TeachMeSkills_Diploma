@@ -1,7 +1,10 @@
-﻿namespace Models.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Models.Entities
 {
     public class Comment
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int PostId { get; set; }
         public int? UserId { get; set; }

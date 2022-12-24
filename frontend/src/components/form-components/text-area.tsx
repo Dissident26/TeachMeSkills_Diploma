@@ -1,6 +1,6 @@
 import React, { DetailedHTMLProps, TextareaHTMLAttributes } from "react";
 
-import { UseFormRegister } from "react-hook-form";
+import { FormState, UseFormRegister } from "react-hook-form";
 
 import styles from "./styles.module.scss";
 
@@ -11,9 +11,16 @@ interface TextAreaProps
   > {
   label?: string;
   register?: UseFormRegister<any>;
+  formState?: FormState<any>;
 }
 
-export const TextArea = ({ name, label, register, ...rest }: TextAreaProps) => {
+export const TextArea = ({
+  name,
+  label,
+  register,
+  formState,
+  ...rest
+}: TextAreaProps) => {
   return (
     //formstate торчит в дом
     <>

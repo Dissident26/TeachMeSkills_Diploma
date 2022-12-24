@@ -19,6 +19,8 @@ export const urls = {
   },
   comment: {
     getListByPostId: `${BASE_URLS.COMMENT}/getById`,
+    createPostComment: `${BASE_URLS.COMMENT}/add`,
+    createRepliedComment: `${BASE_URLS.COMMENT}/addReply`,
   },
   authorization: {
     signIn: `${BASE_URLS.AUTH}/singIn`,

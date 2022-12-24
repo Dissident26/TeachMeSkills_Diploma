@@ -4,7 +4,7 @@ using DataBase.Contexts;
 using Services.Dtos;
 using Services.Interfaces;
 using Services.Exceptions;
-using System.Net;
+using Models.Entities;
 
 namespace Services.DbServices
 {
@@ -17,13 +17,44 @@ namespace Services.DbServices
         }
         public async Task<CommentDto> Create(CommentDto model)
         {
-            var entity = model.MapToEntity();
+            var coment = new CommentDto()
+            {
+                PostId = model.PostId,
+                Content = model.Content,
+                UserId = model.UserId,
+                CreationDate= model.CreationDate,
+            };  // ???
+
+            var entity = coment.MapToEntity();
             await _dbContext.Comments.AddAsync(entity);
             await _dbContext.SaveChangesAsync();
 
             return new CommentDto(entity);
         }
+        public async Task CreateRepliedComment(CommentDto model)
+        {
+            var parent = await _dbContext.Comments
+                .Where(comment => comment.Id == model.Id)
+                .Include(comment => comment.Replies)
+                .SingleOrDefaultAsync();
 
+            if (parent is null)
+            {
+                throw new CommentNotFoundException();  //add text??
+            }
+            var entity = new CommentDto()
+            {
+                PostId = model.PostId,
+                Content = model.Content,
+                UserId = model.UserId,
+                CreationDate = model.CreationDate,
+            }.MapToEntity();
+
+            parent.Replies.Add(entity); //do not bind repliedCommentId, it's always == 0
+
+            await _dbContext.SaveChangesAsync();
+
+        }
         public async Task<List<CommentDto>> Create(List<CommentDto> models)
         {
             var mappedModels = models.Select(model => model.MapToEntity());

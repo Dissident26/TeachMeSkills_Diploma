@@ -6,6 +6,7 @@ using WebApi.Constants;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Authentication.Helpers;
 
 namespace WebApi
 {
@@ -65,9 +66,28 @@ namespace WebApi
         [HttpPost]
         [Route(RouteConstants.Add)]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<CommentDto> AddComment([FromBody] CommentDto comment)
+        public async Task<CommentDto> AddPostComment(CommentDto comment)
         {
-            return await _commentServices.Create(comment);
+            int userId = JwtToken.GetUserIdFromToken(Request.Headers);
+
+            return await _commentServices.Create(new CommentDto()
+            {
+                PostId = comment.PostId,
+                UserId = userId,
+                Content = comment.Content,
+                CreationDate = DateTime.UtcNow
+            });
+        }
+        [HttpPost]
+        [Route(RouteConstants.AddReply)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task AddRepliedComment(CommentDto comment)
+        {
+            int userId = JwtToken.GetUserIdFromToken(Request.Headers);
+
+            comment.UserId = userId;
+
+            await _commentServices.CreateRepliedComment(comment);
         }
         [HttpPut]
         [Route(RouteConstants.Update)]

@@ -9,7 +9,6 @@ namespace Services.Dtos
         public int PostId { get; set; }
         public int? UserId { get; set; }
         public UserDto User { get; set; }
-        public int? RepliedCommentId { get; set; }
         public string Content { get; set; }
         public DateTime CreationDate { get; set; }
         public List<CommentDto> RepliedComments { get; set; }
@@ -30,7 +29,7 @@ namespace Services.Dtos
                 PostId = PostId,
                 UserId = UserId,
                 Content = Content,
-                CreationDate = CreationDate
+                CreationDate = CreationDate,
             };
         }
     }

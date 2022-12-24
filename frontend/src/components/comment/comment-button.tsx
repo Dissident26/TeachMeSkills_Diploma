@@ -6,7 +6,7 @@ interface CommentsButtonProps {
   onClick: () => void;
 }
 
-export const CommentsButton = ({
+export const CommentButton = ({
   isCommentsVisible,
   commentsCount,
   onClick,

@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from "react";
 
-import { PostDto, useGetCommentsByPostId } from "../../api";
-import { DateSection, Link, Spinner } from "..";
-import { CommentsButton } from "./comments-button";
+import { CommentDto, PostDto, useGetCommentsByPostId } from "../../api";
+import { DateSection, Link, ReplyPostForm, Spinner } from "..";
+import { CommentButton } from "./comment-button";
 import { useComments } from "./use-comments";
 import { generatePath } from "react-router-dom";
 import { routes } from "../../routes";
@@ -37,14 +37,22 @@ export const CommentsSection = ({ post }: CommentsSectionProps) => {
 
   return (
     <div>
-      <CommentsButton
+      <CommentButton
         isCommentsVisible={isCommentsVisible}
         commentsCount={post?.commentsCount}
         onClick={handleCLick}
       />
       <Link to={pathToPost}>link</Link>
       <DateSection date={post?.creationDate} />
-      {isCommentsVisible && <div>{comments}</div>}
+      {isCommentsVisible && (
+        <div>
+          {comments}
+          <ReplyPostForm
+            comment={{ postId: post?.id } as CommentDto}
+            refetchComments={refetchComments}
+          />
+        </div>
+      )}
     </div>
   );
 };
