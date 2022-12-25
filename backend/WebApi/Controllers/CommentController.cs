@@ -60,6 +60,7 @@ namespace WebApi
             int userId = JwtToken.GetUserIdFromToken(Request.Headers);
 
             comment.UserId = userId;
+            comment.CreationDate = DateTime.UtcNow;
 
             return await _commentServices.Create(comment);
         }
@@ -71,6 +72,7 @@ namespace WebApi
             int userId = JwtToken.GetUserIdFromToken(Request.Headers);
 
             comment.UserId = userId;
+            comment.CreationDate = DateTime.UtcNow;
 
             await _commentServices.CreateRepliedComment(comment);
         }

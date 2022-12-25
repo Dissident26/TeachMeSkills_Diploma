@@ -3,6 +3,7 @@ import { CommentDto, UserDto } from "../../api";
 import { UserSection, DateSection, ReplyCommentForm } from "..";
 
 import styles from "./styles.module.scss";
+import { useUserProvider } from "../../contexts";
 
 interface CommentProps {
   comment: CommentDto;
@@ -28,6 +29,9 @@ export const Comment = ({
     setIsReplyVisible();
   }, [setIsReplyVisible, refetchComments]);
 
+  const { user: authUser } = useUserProvider();
+  const isReplySectionAvailable = !!authUser;
+
   return (
     <>
       <div className={styles.container}>
@@ -35,7 +39,9 @@ export const Comment = ({
         <div className={styles.info}>
           <UserSection user={user} avatarSize={AVATAR_SIZE} />
           <DateSection date={comment?.creationDate} />
-          <button onClick={setIsReplyVisible}>Reply</button>
+          {isReplySectionAvailable && (
+            <button onClick={setIsReplyVisible}>Reply</button>
+          )}
         </div>
         {isReplyVisible && (
           <ReplyCommentForm comment={comment} onSuccess={handleSubmit} />
