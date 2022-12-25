@@ -8,15 +8,15 @@ const CONTENT_INPUT_NAME = "content";
 
 interface ReplyCommentFormProps {
   comment?: CommentDto;
-  refetchComments?: () => void;
+  onSuccess?: () => void;
 }
 
 export const ReplyCommentForm = ({
   comment,
-  refetchComments,
+  onSuccess,
 }: ReplyCommentFormProps) => {
   const { mutateAsync, isLoading } = useCreateRepliedCommentMutation({
-    onSuccess: refetchComments,
+    onSuccess,
   });
   const handleSubmit = useCallback(
     async (data: CommentDto) => {

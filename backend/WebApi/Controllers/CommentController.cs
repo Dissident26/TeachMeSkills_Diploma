@@ -36,7 +36,7 @@ namespace WebApi
         }
         [HttpGet]
         [Route(RouteConstants.GetById)]
-        public async Task<List<CommentDto>> GetCommentByPostId(int id)
+        public async Task<List<CommentDto>> GetListByPost(int id)
         {
             return await _commentServices.GetListByPost(id);
         }
@@ -48,7 +48,7 @@ namespace WebApi
         }
         [HttpGet]
         [Route(RouteConstants.GetList)]
-        public async Task<List<CommentDto>> GetCommentsList()
+        public async Task<List<CommentDto>> GetList()
         {
             return await _commentServices.GetList();
         }

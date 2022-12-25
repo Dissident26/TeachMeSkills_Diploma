@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useCallback } from "react";
 import { CommentDto, UserDto } from "../../api";
 import { UserSection, DateSection, ReplyCommentForm } from "..";
 
@@ -9,6 +9,7 @@ interface CommentProps {
   user?: UserDto;
   isReplyVisible: boolean;
   setIsReplyVisible: () => void;
+  refetchComments?: () => void;
   children?: ReactNode;
 }
 
@@ -19,8 +20,14 @@ export const Comment = ({
   user,
   isReplyVisible,
   setIsReplyVisible,
+  refetchComments,
   children,
 }: CommentProps) => {
+  const handleSubmit = useCallback(() => {
+    refetchComments?.();
+    setIsReplyVisible();
+  }, [setIsReplyVisible, refetchComments]);
+
   return (
     <>
       <div className={styles.container}>
@@ -30,7 +37,9 @@ export const Comment = ({
           <DateSection date={comment?.creationDate} />
           <button onClick={setIsReplyVisible}>Reply</button>
         </div>
-        {isReplyVisible && <ReplyCommentForm comment={comment} />}
+        {isReplyVisible && (
+          <ReplyCommentForm comment={comment} onSuccess={handleSubmit} />
+        )}
       </div>
       <div className={styles.childrenContainer}>{children}</div>
     </>

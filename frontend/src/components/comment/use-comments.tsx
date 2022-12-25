@@ -4,7 +4,10 @@ import { CommentListDto, CommentDto } from "../../api";
 
 import { Comment } from ".";
 
-export const useComments = (comments?: CommentListDto) => {
+export const useComments = (
+  comments?: CommentListDto,
+  refetchComments?: () => void
+) => {
   const [selectedCommentId, setSelectedCommentId] = useState<number>(null);
 
   const handleClick = (id: number) => {
@@ -13,27 +16,21 @@ export const useComments = (comments?: CommentListDto) => {
 
   const addRepliedComments = (comment: CommentDto) => {
     const isReplyVisible = selectedCommentId === comment.id;
+    const props = {
+      key: comment.id,
+      user: comment.user,
+      comment,
+      isReplyVisible,
+      setIsReplyVisible: () => handleClick(comment.id),
+      refetchComments,
+    };
 
     if (!comment?.repliedComments) {
-      return (
-        <Comment
-          key={comment.id}
-          user={comment.user}
-          comment={comment}
-          isReplyVisible={isReplyVisible}
-          setIsReplyVisible={() => handleClick(comment.id)}
-        />
-      );
+      return <Comment {...props} />;
     }
 
     return (
-      <Comment
-        key={comment.id}
-        user={comment.user}
-        comment={comment}
-        isReplyVisible={isReplyVisible}
-        setIsReplyVisible={() => handleClick(comment.id)}
-      >
+      <Comment {...props}>
         {comment?.repliedComments.map((comment) => addRepliedComments(comment))}
       </Comment>
     );

@@ -20,7 +20,7 @@ export const CommentsSection = ({ post }: CommentsSectionProps) => {
     refetch: refetchComments,
   } = useGetCommentsByPostId(post?.id);
 
-  const { comments } = useComments(data);
+  const { comments } = useComments(data, refetchComments);
 
   const handleCLick = useCallback(() => {
     setIsCommentsVisible((prevState) => !prevState);
