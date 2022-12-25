@@ -5,6 +5,7 @@ using Services.Dtos;
 using Services.Interfaces;
 using Services.Exceptions;
 using Models.Entities;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Services.DbServices
 {
@@ -17,19 +18,10 @@ namespace Services.DbServices
         }
         public async Task<CommentDto> Create(CommentDto model)
         {
-            var coment = new CommentDto()
-            {
-                PostId = model.PostId,
-                Content = model.Content,
-                UserId = model.UserId,
-                CreationDate= model.CreationDate,
-            };  // ???
-
-            var entity = coment.MapToEntity();
-            await _dbContext.Comments.AddAsync(entity);
+            await _dbContext.Comments.AddAsync(model.MapToEntity());
             await _dbContext.SaveChangesAsync();
 
-            return new CommentDto(entity);
+            return new CommentDto();    // think about return type
         }
         public async Task CreateRepliedComment(CommentDto model)
         {
@@ -50,10 +42,9 @@ namespace Services.DbServices
                 CreationDate = model.CreationDate,
             }.MapToEntity();
 
-            parent.Replies.Add(entity); //do not bind repliedCommentId, it's always == 0
+            parent.Replies.Add(entity);
 
             await _dbContext.SaveChangesAsync();
-
         }
         public async Task<List<CommentDto>> Create(List<CommentDto> models)
         {
@@ -83,7 +74,9 @@ namespace Services.DbServices
 
         public async Task<CommentDto> Get(int id)
         {
-            var comment = await _dbContext.Comments.SingleOrDefaultAsync(comment => comment.Id == id);
+            var comment = await _dbContext.Comments
+                .Where(comment => comment.Id == id)
+                .SingleOrDefaultAsync();
 
             if (comment is null)
             {
@@ -108,12 +101,30 @@ namespace Services.DbServices
 
         public async Task<List<CommentDto>> GetListByPost(int postId)
         {
-            return await _dbContext.Comments
-                .Where(comment => comment.PostId == postId)
-                .Select(comment => new CommentDto(comment)
+            var allComments = await _dbContext.Comments
+                .Include(x => x.Replies)
+                .Include(x => x.User)
+                .Where(comment => comment.PostId == postId).ToListAsync();
+            var allCommentsIds = allComments.Select(c => c.Id).ToList();
+
+            var replies = await _dbContext.RepliedComments
+                .Where(r => allCommentsIds.Contains(r.CommentId))
+                .ToListAsync();
+
+            foreach (var reply in replies)
+            {
+               var c = allComments.SingleOrDefault(x => x.Id == reply.RepliedCommentId);
+
+                if (c != null)
                 {
-                    User = new UserDto(comment.User),
-                }).ToListAsync();
+                    allComments.Remove(c);
+                }
+            }
+
+            return allComments.Select(comment => new CommentDto(comment)
+            {
+                User = new UserDto(comment.User),
+            }).ToList();
         }
 
         public async Task<CommentDto> Update(CommentDto newModel)

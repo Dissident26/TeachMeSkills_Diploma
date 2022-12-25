@@ -38,18 +38,7 @@ namespace WebApi
         [Route(RouteConstants.GetById)]
         public async Task<List<CommentDto>> GetCommentByPostId(int id)
         {
-            var comments = await _commentServices.GetListByPost(id);
-
-            foreach (var comment in comments)
-            {
-                var repliedComments = await _repliedCommentServices.GetListByComment(comment.Id);
-                if (!repliedComments.IsNullOrEmpty())
-                {
-                    comment.RepliedComments = repliedComments;
-                }
-            }
-
-            return comments;
+            return await _commentServices.GetListByPost(id);
         }
         [HttpPost]
         [Route(RouteConstants.GetById)]
@@ -70,13 +59,9 @@ namespace WebApi
         {
             int userId = JwtToken.GetUserIdFromToken(Request.Headers);
 
-            return await _commentServices.Create(new CommentDto()
-            {
-                PostId = comment.PostId,
-                UserId = userId,
-                Content = comment.Content,
-                CreationDate = DateTime.UtcNow
-            });
+            comment.UserId = userId;
+
+            return await _commentServices.Create(comment);
         }
         [HttpPost]
         [Route(RouteConstants.AddReply)]

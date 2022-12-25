@@ -18,8 +18,10 @@ namespace Services.Dtos
             Id = entity.Id;
             PostId = entity.PostId;
             UserId = entity.UserId;
+            User = new UserDto(entity.User);
             Content = entity.Content;
             CreationDate = entity.CreationDate;
+            RepliedComments = entity?.Replies.Select(c => new CommentDto(c)).ToList();
         }
         public Comment MapToEntity()
         {
@@ -28,6 +30,7 @@ namespace Services.Dtos
                 Id = Id,
                 PostId = PostId,
                 UserId = UserId,
+                User = User?.MapToEntity(),
                 Content = Content,
                 CreationDate = CreationDate,
             };

@@ -18,11 +18,11 @@ namespace DataBase.Configurations
                     repliedComment => repliedComment
                         .HasOne(repliedComment => repliedComment.Comment)
                         .WithMany()
-                        .HasForeignKey(repliedComment => repliedComment.RepliedCommentId),
+                        .HasForeignKey(repliedComment => repliedComment.CommentId),
                     repliedComment => repliedComment
-                        .HasOne(repliedComment => repliedComment.Comment)
+                        .HasOne(repliedComment => repliedComment.Reply)
                         .WithMany()
-                        .HasForeignKey(repliedComment => repliedComment.CommentId)
+                        .HasForeignKey(repliedComment => repliedComment.RepliedCommentId)
                 );
 
         }
