@@ -15,23 +15,12 @@ export const Form = ({
   ...rest
 }: FormProps) => {
   const methods = useForm({ defaultValues });
-  const { handleSubmit, register, formState } = methods;
+  const { handleSubmit } = methods;
 
   return (
     <FormProvider {...methods}>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)} {...rest}>
-        {React.Children.map(children, (child) => {
-          return child.props.name
-            ? React.createElement(child.type, {
-                ...{
-                  ...child.props,
-                  register,
-                  formState,
-                  key: child.props.name,
-                },
-              })
-            : child;
-        })}
+        {children}
       </form>
     </FormProvider>
   );

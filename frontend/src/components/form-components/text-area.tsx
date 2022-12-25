@@ -1,6 +1,6 @@
 import React, { DetailedHTMLProps, TextareaHTMLAttributes } from "react";
 
-import { FormState, UseFormRegister } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 
 import styles from "./styles.module.scss";
 
@@ -10,26 +10,21 @@ interface TextAreaProps
     HTMLTextAreaElement
   > {
   label?: string;
-  register?: UseFormRegister<any>;
-  formState?: FormState<any>;
 }
 
-export const TextArea = ({
-  name,
-  label,
-  register,
-  formState,
-  ...rest
-}: TextAreaProps) => {
+export const TextArea = ({ label, name, ...rest }: TextAreaProps) => {
+  const { control } = useFormContext();
+
   return (
-    //formstate торчит в дом
-    <>
-      {label && <label htmlFor={name}>{label}</label>}
-      <textarea
-        className={styles.textArea}
-        {...rest}
-        {...register?.(name, { required: "* This field is required" })}
-      ></textarea>
-    </>
+    <Controller
+      name={name}
+      control={control}
+      render={({ field }) => (
+        <>
+          {label && <label htmlFor={name}>{label}</label>}
+          <textarea className={styles.textArea} {...rest} {...field}></textarea>
+        </>
+      )}
+    />
   );
 };
