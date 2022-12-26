@@ -50,5 +50,11 @@ namespace WebApi
         {
             return await _tagServices.Delete(id);
         }
+        [HttpGet]
+        [Route(RouteConstants.GetSuggestTags)]
+        public async Task<List<TagDto>> GetSuggestedTags(string input)
+        {
+            return await _tagServices.GetSuggestedTags(input);
+        }
     }
 }

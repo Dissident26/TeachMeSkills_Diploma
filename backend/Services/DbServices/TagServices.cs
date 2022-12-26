@@ -91,5 +91,12 @@ namespace Services.DbServices
 
             return new TagDto(entity);
         }
+        public async Task<List<TagDto>> GetSuggestedTags(string input)
+        {
+            return await _dbContext.Tags
+                .Where(tag => tag.Name.Contains(input))
+                .Select(tag => new TagDto(tag))
+                .ToListAsync();
+        }
     }
 }

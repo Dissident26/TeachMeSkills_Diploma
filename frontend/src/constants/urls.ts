@@ -29,5 +29,6 @@ export const urls = {
   },
   tag: {
     get: `${BASE_URLS.TAG}`,
+    getSuggestedTags: `${BASE_URLS.TAG}/GetSuggestedTags`,
   },
 };

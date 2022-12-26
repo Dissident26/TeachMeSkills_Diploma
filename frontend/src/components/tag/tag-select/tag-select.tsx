@@ -1,13 +1,15 @@
 import React, { OptionHTMLAttributes } from "react";
+import debounce from "lodash/debounce";
 
 import { AsyncSelect } from "../..";
-import { getTagList } from "../../../api/requests/tag-requests";
+import { getSuggestedTags } from "../../../api";
 
 import styles from "./styles.module.scss";
 
 type Option = OptionHTMLAttributes<HTMLOptionElement>;
 
 const TAGS_INPUT_NAME = "tags";
+const DEBOUNCE_VALUE = 1000;
 
 const filterOptions = (options: Option[]) => (inputValue: string) => {
   return options.filter(({ label }) =>
@@ -24,13 +26,25 @@ const mapOptions = (options: any[]): Option[] => {
 
 export const TagSelect = () => {
   const loadOptions = async (inputValue: string) => {
-    const response = await getTagList();
+    const response = await getSuggestedTags(inputValue);
     const values = mapOptions(response);
     const filter = filterOptions(values);
 
     return filter(inputValue);
   };
-  <select></select>;
+
+  const debouncedLoadOptions = debounce(
+    (inputValue, callback) => {
+      loadOptions(inputValue).then((data) => {
+        callback(data);
+      });
+    },
+    DEBOUNCE_VALUE,
+    {
+      trailing: true,
+    }
+  );
+
   return (
     <>
       <label htmlFor={TAGS_INPUT_NAME}>Tags</label>
@@ -40,7 +54,7 @@ export const TagSelect = () => {
         isMulti
         isClearable
         placeholder={"Start typing..."}
-        loadOptions={loadOptions}
+        loadOptions={debouncedLoadOptions}
         cacheOptions
       />
     </>
