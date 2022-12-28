@@ -8,6 +8,7 @@ namespace Services.Dtos
         public int Id { get; set; }
         public int? UserId { get; set; }
         public List<TagDto> Tags { get; set; }
+        public List<PostTagDto> PostTags { get; set; }
         public UserDto User { get; set; }
         public string Content { get; set; }
         public DateTime CreationDate { get; set; }
@@ -19,6 +20,8 @@ namespace Services.Dtos
             UserId = entity.UserId;
             Content = entity.Content;
             CreationDate = entity.CreationDate;
+            Tags = entity.Tags?.Select(tag => new TagDto(tag)).ToList();
+            PostTags = entity.PostTags?.Select(tag => new PostTagDto(tag)).ToList();
         }
         public Post MapToEntity()
         {
@@ -27,7 +30,9 @@ namespace Services.Dtos
                 Id = Id,
                 UserId = UserId,
                 Content = Content,
-                CreationDate = CreationDate
+                CreationDate = CreationDate,
+                Tags = Tags?.Select(tag => tag.MapToEntity()).ToList(),
+                PostTags = PostTags?.Select(tag => tag.MapToEntity()).ToList()
             };
         }
     }

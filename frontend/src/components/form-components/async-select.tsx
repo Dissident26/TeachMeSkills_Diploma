@@ -1,9 +1,12 @@
 import React from "react";
-import { default as NativeAsyncSelect, AsyncProps } from "react-select/async";
+import {
+  default as NativeAsyncSelect,
+  AsyncCreatableProps,
+} from "react-select/async-creatable";
 
 import { Controller, useFormContext } from "react-hook-form";
 
-export const AsyncSelect = (props: AsyncProps<any, any, any>) => {
+export const AsyncSelect = (props: AsyncCreatableProps<any, any, any>) => {
   const { control } = useFormContext();
 
   return (

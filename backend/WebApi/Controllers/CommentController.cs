@@ -24,15 +24,7 @@ namespace WebApi
         [Route(RouteConstants.Get)]
         public async Task<CommentDto> GetComment(int id)
         {
-            var comment = await _commentServices.Get(id);
-            var repliedComments = await _repliedCommentServices.GetListByComment(id);
-
-            if (!repliedComments.IsNullOrEmpty())
-            {
-                comment.RepliedComments = repliedComments;
-            }
-
-            return comment;
+            return await _commentServices.Get(id);
         }
         [HttpGet]
         [Route(RouteConstants.GetById)]

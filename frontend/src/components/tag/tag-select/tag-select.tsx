@@ -51,6 +51,7 @@ export const TagSelect = () => {
       <AsyncSelect
         className={styles.input}
         name={TAGS_INPUT_NAME}
+        required
         isMulti
         isClearable
         placeholder={"Start typing..."}

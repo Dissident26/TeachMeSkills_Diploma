@@ -17,11 +17,19 @@ namespace Services.DbServices
 
         public async Task<PostDto> Create(PostDto model)
         {
+            model.PostTags.AddRange(model.Tags.Select(tag => new PostTagDto()
+            {
+                TagId = tag.Id,
+                Tag = tag.MapToEntity()
+            }));
+
+            model.Tags = null;
+
             var entity = model.MapToEntity();
             await _dbContext.Posts.AddAsync(entity);
             await _dbContext.SaveChangesAsync();
 
-            return new PostDto(entity);
+            return new PostDto() { Id = entity.Id };
         }
 
         public async Task<List<PostDto>> Create(List<PostDto> models)

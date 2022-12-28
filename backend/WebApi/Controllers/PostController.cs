@@ -4,6 +4,8 @@ using Services.Dtos;
 using Services.Interfaces;
 using WebApi.Constants;
 using Authentication.Helpers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi
 {
@@ -35,8 +37,14 @@ namespace WebApi
         }
         [HttpPost]
         [Route(RouteConstants.Add)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<PostDto> AddPost(PostDto post)
         {
+            int userId = JwtToken.GetUserIdFromToken(Request.Headers);
+
+            post.UserId = userId;
+            post.CreationDate = DateTime.UtcNow;
+
             return await _postServices.Create(post);
         }
         [HttpPut]

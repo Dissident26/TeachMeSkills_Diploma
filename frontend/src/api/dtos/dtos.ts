@@ -6,8 +6,11 @@ export interface UserDto {
 }
 export type UserListDto = UserDto[];
 export interface TagDto {
-  id: number;
+  id?: number;
   name: string;
+}
+export interface PostTagDto {
+  tagId: number;
 }
 export interface PostDto {
   id: number;
@@ -17,6 +20,7 @@ export interface PostDto {
   creationDate: Date;
   commentsCount: number;
   tags: TagDto[];
+  postTags: PostTagDto[];
 }
 export type PostListDto = PostDto[];
 

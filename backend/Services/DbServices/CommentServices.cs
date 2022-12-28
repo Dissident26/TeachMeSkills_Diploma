@@ -18,7 +18,8 @@ namespace Services.DbServices
         }
         public async Task<CommentDto> Create(CommentDto model)
         {
-            await _dbContext.Comments.AddAsync(model.MapToEntity());
+            var entity = model.MapToEntity();
+            await _dbContext.Comments.AddAsync(entity);
             await _dbContext.SaveChangesAsync();
 
             return new CommentDto();    // think about return type
