@@ -4,7 +4,6 @@
     {
         public const string Get = "/[controller]/{id}";
         public const string GetById = "/[controller]/GetById/{id}";
-        public const string PostById = "/[controller]/GetById";
         public const string GetList = "/[controller]/List";
         public const string Add = "/[controller]/Add";
         public const string AddReply = "/[controller]/AddReply";

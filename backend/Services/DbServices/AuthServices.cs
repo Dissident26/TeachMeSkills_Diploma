@@ -49,7 +49,7 @@ namespace Services.DbServices
         public async Task<UserDto> ValidateUser(UserAuthModelDto userAuthModel)
         {
             var entity = await _dbContext.AuthorisedUsers
-                .AsNoTracking()
+                .AsNoTracking() //add encryption
                 .SingleOrDefaultAsync(entity => entity.Name == userAuthModel.Name && entity.Password == userAuthModel.Password);
 
             if(entity is null)

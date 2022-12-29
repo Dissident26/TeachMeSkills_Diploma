@@ -23,7 +23,6 @@ namespace Services.DbServices
             
             return new UserDto(entity);
         }
-
         public async Task<List<UserDto>> Create(List<UserDto> models)
         {
             var mappedModels = models.Select(model => model.MapToEntity());
@@ -32,7 +31,6 @@ namespace Services.DbServices
 
             return await _dbContext.Users.AsNoTracking().Select(user => new UserDto(user)).ToListAsync();
         }
-
         public async Task<UserDto> Delete(int id)
         {
             var entity = await _dbContext.Users.SingleOrDefaultAsync(entity => entity.Id == id);
@@ -58,7 +56,6 @@ namespace Services.DbServices
 
             return new UserDto(entity);
         }
-
         public async Task<UserDto> Get(int id)
         {
             var user = await _dbContext.Users.SingleOrDefaultAsync(user => user.Id == id);
@@ -70,19 +67,10 @@ namespace Services.DbServices
 
             return new UserDto(user);
         }
-
-        public async Task<List<UserDto>> Get(int[] ids)
-        {
-            return await _dbContext.Users.Where(user => ids.Contains(user.Id))
-                .Select(user => new UserDto(user))
-                .ToListAsync();
-        }
-
         public async Task<List<UserDto>> GetList()
         {
             return await _dbContext.Users.Select(user => new UserDto(user)).ToListAsync();
         }
-
         public async Task<UserDto> Update(UserDto newModel)
         {
             var entity = await _dbContext.Users.SingleOrDefaultAsync(entity => entity.Id == newModel.Id);

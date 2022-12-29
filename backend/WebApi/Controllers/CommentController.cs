@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Services.Models;
 using Services.Dtos;
 using Services.Interfaces;
 using WebApi.Constants;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Authentication.Helpers;
@@ -31,12 +29,6 @@ namespace WebApi
         public async Task<List<CommentDto>> GetListByPost(int id)
         {
             return await _commentServices.GetListByPost(id);
-        }
-        [HttpPost]
-        [Route(RouteConstants.GetById)]
-        public async Task<List<CommentDto>> GetComment([FromBody] GetByIdsRequest request)
-        {
-            return await _commentServices.Get(request.Ids);
         }
         [HttpGet]
         [Route(RouteConstants.GetList)]

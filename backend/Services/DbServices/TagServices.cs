@@ -23,7 +23,6 @@ namespace Services.DbServices
 
             return new TagDto(entity);
         }
-
         public async Task<List<TagDto>> Create(List<TagDto> models)
         {
             var mappedModels = models.Select(model => model.MapToEntity());
@@ -33,7 +32,6 @@ namespace Services.DbServices
             return await _dbContext.Tags.AsNoTracking().Select(tag => new TagDto(tag)).ToListAsync(); //??
 
         }
-
         public async Task<TagDto> Delete(int id)
         {
             var entity = await _dbContext.Tags.SingleOrDefaultAsync(entity => entity.Id == id);
@@ -49,7 +47,6 @@ namespace Services.DbServices
 
             return new TagDto(entity);
         }
-
         public async Task<TagDto> Get(int id)
         {
             var tag = await _dbContext.Tags.SingleOrDefaultAsync(tag => tag.Id == id);
@@ -61,21 +58,12 @@ namespace Services.DbServices
 
             return new TagDto(tag);
         }
-
-        public async Task<List<TagDto>> Get(int[] ids)
-        {
-            return await _dbContext.Tags.Where(tag => ids.Contains(tag.Id))
-                .Select(tag => new TagDto(tag))
-                .ToListAsync();
-        }
-
         public async Task<List<TagDto>> GetList()
         {
             return await _dbContext.Tags
                 .Select(tag => new TagDto(tag))
                 .ToListAsync();
         }
-
         public async Task<TagDto> Update(TagDto newModel)
         {
             var entity = await _dbContext.Tags.SingleOrDefaultAsync(entity => entity.Id == newModel.Id);

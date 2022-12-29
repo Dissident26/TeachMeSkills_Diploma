@@ -4,8 +4,6 @@ using DataBase.Contexts;
 using Services.Dtos;
 using Services.Interfaces;
 using Services.Exceptions;
-using Models.Entities;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Services.DbServices
 {
@@ -55,7 +53,6 @@ namespace Services.DbServices
 
             return await _dbContext.Comments.AsNoTracking().Select(comment => new CommentDto(comment)).ToListAsync();
         }
-
         public async Task<CommentDto> Delete(int id)
         {
             var entity = await _dbContext.Comments
@@ -72,7 +69,6 @@ namespace Services.DbServices
 
             return new CommentDto(entity);
         }
-
         public async Task<CommentDto> Get(int id)
         {
             var comment = await _dbContext.Comments
@@ -86,20 +82,11 @@ namespace Services.DbServices
 
             return new CommentDto(comment);
         }
-
-        public async Task<List<CommentDto>> Get(int[] ids)
-        {
-            return await _dbContext.Comments.Where(comment => ids.Contains(comment.Id))
-                .Select(comment => new CommentDto(comment))
-                .ToListAsync();
-        }
-
         public async Task<List<CommentDto>> GetList()
         {
             return await _dbContext.Comments
                 .Select(comment => new CommentDto(comment)).ToListAsync();
         }
-
         public async Task<List<CommentDto>> GetListByPost(int postId)
         {
             var allComments = await _dbContext.Comments
@@ -127,7 +114,6 @@ namespace Services.DbServices
                 User = new UserDto(comment.User),
             }).ToList();
         }
-
         public async Task<CommentDto> Update(CommentDto newModel)
         {
             var entity = await _dbContext.Comments.SingleOrDefaultAsync(entity => entity.Id == newModel.Id);

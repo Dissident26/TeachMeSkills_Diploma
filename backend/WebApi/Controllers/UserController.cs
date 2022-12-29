@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Services.Dtos;
 using Services.Interfaces;
-using Services.Models;
 using WebApi.Constants;
 
 namespace WebApi
@@ -19,13 +18,6 @@ namespace WebApi
         public async Task<UserDto> GetUser(int id)
         {
             return await _userServices.Get(id);
-        }
-
-        [HttpPost]
-        [Route(RouteConstants.PostById)]
-        public async Task<List<UserDto>> GetUser(GetByIdsRequest request)
-        {
-            return await _userServices.Get(request.Ids);
         }
         [HttpGet]
         [Route(RouteConstants.GetList)]

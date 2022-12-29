@@ -23,7 +23,6 @@ namespace Services.DbServices
 
             return new PostTagDto(entity);
         }
-
         public async Task<List<PostTagDto>> Create(List<PostTagDto> models)
         {
             var mappedModels = models.Select(model => model.MapToEntity());
@@ -32,7 +31,6 @@ namespace Services.DbServices
 
             return await _dbContext.PostTags.AsNoTracking().Select(postTag => new PostTagDto(postTag)).ToListAsync();
         }
-
         public async Task<PostTagDto> Delete(int id)
         {
             var entity = await _dbContext.PostTags.SingleOrDefaultAsync(entity => entity.Id == id);
@@ -48,7 +46,6 @@ namespace Services.DbServices
 
             return new PostTagDto(entity);
         }
-
         public async Task<PostTagDto> Get(int id)
         {
             var postTag = await _dbContext.PostTags.SingleOrDefaultAsync(postTag => postTag.Id == id);
@@ -60,19 +57,10 @@ namespace Services.DbServices
 
             return new PostTagDto(postTag);
         }
-
-        public async Task<List<PostTagDto>> Get(int[] ids)
-        {
-            return await _dbContext.PostTags.Where(postTag => ids.Contains(postTag.Id))
-                .Select(postTag => new PostTagDto(postTag))
-                .ToListAsync();
-        }
-
         public async Task<List<PostTagDto>> GetList()
         {
             return await _dbContext.PostTags.Select(postTag => new PostTagDto(postTag)).ToListAsync();
         }
-
         public async Task<PostTagDto> Update(PostTagDto newModel)
         {
             var entity = await _dbContext.PostTags.SingleOrDefaultAsync(entity => entity.Id == newModel.Id);

@@ -14,7 +14,6 @@ namespace Services.DbServices
         {
             _dbContext = context;
         }
-
         public async Task<PostDto> Create(PostDto model)
         {
             model.PostTags.AddRange(model.Tags.Select(tag => new PostTagDto()
@@ -31,7 +30,6 @@ namespace Services.DbServices
 
             return new PostDto() { Id = entity.Id };
         }
-
         public async Task<List<PostDto>> Create(List<PostDto> models)
         {
             var mappedModels = models.Select(model => model.MapToEntity());
@@ -41,7 +39,6 @@ namespace Services.DbServices
             return await _dbContext.Posts.AsNoTracking()
                 .Select(post => new PostDto(post)).ToListAsync();
         }
-
         public async Task<PostDto> Delete(int id)
         {
             var entity = await _dbContext.Posts.SingleOrDefaultAsync(entity => entity.Id == id);
@@ -57,7 +54,6 @@ namespace Services.DbServices
 
             return new PostDto(entity);
         }
-
         public async Task<PostDto> Get(int id)
         {
             var post = await _dbContext.Posts
@@ -77,14 +73,6 @@ namespace Services.DbServices
 
             return post;
         }
-
-        public async Task<List<PostDto>> Get(int[] ids)
-        {
-            return await _dbContext.Posts.Where(post => ids.Contains(post.Id))
-                .Select(post => new PostDto(post))
-                .ToListAsync();
-        }
-
         public async Task<List<PostDto>> GetList()
         {
             return await _dbContext.Posts
@@ -95,7 +83,6 @@ namespace Services.DbServices
                     Tags = post.Tags.Select(tag => new TagDto(tag)).ToList()
                 }).ToListAsync();
         }
-
         public async Task<PostDto> Update(PostDto newModel)
         {
             var entity = await _dbContext.Posts.SingleOrDefaultAsync(entity => entity.Id == newModel.Id);

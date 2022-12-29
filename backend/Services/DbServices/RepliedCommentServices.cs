@@ -22,7 +22,6 @@ namespace Services.DbServices
 
             return new RepliedCommentDto(entity);
         }
-
         public async Task<List<RepliedCommentDto>> Create(List<RepliedCommentDto> models)
         {
             var mappedModels = models.Select(model => model.MapToEntity());
@@ -32,7 +31,6 @@ namespace Services.DbServices
             return await _dbContext.RepliedComments.AsNoTracking()
                 .Select(repliedComment => new RepliedCommentDto(repliedComment)).ToListAsync();
         }
-
         public Task<RepliedComment> Create(RepliedComment model)
         {
             throw new NotImplementedException();
@@ -64,19 +62,10 @@ namespace Services.DbServices
 
             return new RepliedCommentDto(repliedComment);
         }
-
-        public async Task<List<RepliedCommentDto>> Get(int[] ids)
-        {
-            return await _dbContext.RepliedComments.Where(repliedComment => ids.Contains(repliedComment.Id))
-                .Select(repliedComment => new RepliedCommentDto(repliedComment))
-                .ToListAsync();
-        }
-
         public async Task<List<RepliedCommentDto>> GetList()
         {
             return await _dbContext.RepliedComments.Select(repliedComment => new RepliedCommentDto(repliedComment)).ToListAsync();
         }
-
         public async Task<RepliedCommentDto> Update(RepliedCommentDto newModel)
         {
             var entity = await _dbContext.RepliedComments.SingleOrDefaultAsync(entity => entity.Id == newModel.Id);
