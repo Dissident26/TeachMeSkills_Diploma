@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 using Services.Extentions;
 using Authentication.Options;
+using WebApi.Middlewares;
 
 namespace WebApi
 {
@@ -41,7 +43,8 @@ namespace WebApi
             app.UseRouting();
             app.UseHttpsRedirection();
             app.UseAuthorization();
-            //midleware
+
+            app.UseMiddleware<ErrorHandlerMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

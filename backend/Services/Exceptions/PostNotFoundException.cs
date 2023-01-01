@@ -2,11 +2,7 @@
 {
     public class PostNotFoundException : Exception
     {
-        public PostNotFoundException()
-        {
-        }
-
-        public PostNotFoundException(string message) : base(message)
+        public PostNotFoundException(string message = ExceptionMessages.PostNotFound) : base(message)
         {
         }
 

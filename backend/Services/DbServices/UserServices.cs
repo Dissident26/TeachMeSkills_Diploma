@@ -37,7 +37,7 @@ namespace Services.DbServices
 
             if (entity is null)
             {
-                throw new UserNotFoundException();  //add text??
+                throw new UserNotFoundException();
             }
 
             await _dbContext.Comments
@@ -62,7 +62,7 @@ namespace Services.DbServices
 
             if (user is null)
             {
-                throw new UserNotFoundException();  //add text??
+                throw new UserNotFoundException();
             }
 
             return new UserDto(user);
@@ -77,7 +77,7 @@ namespace Services.DbServices
 
             if (entity is null)
             {
-                throw new UserNotFoundException();  //add text??
+                throw new UserNotFoundException();
             }
 
             entity.Name = newModel.Name;

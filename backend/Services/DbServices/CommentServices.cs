@@ -31,7 +31,7 @@ namespace Services.DbServices
 
             if (parent is null)
             {
-                throw new CommentNotFoundException();  //add text??
+                throw new CommentNotFoundException();
             }
             var entity = new CommentDto()
             {
@@ -60,7 +60,7 @@ namespace Services.DbServices
 
             if (entity is null)
             {
-                throw new CommentNotFoundException();  //add text??
+                throw new CommentNotFoundException();
             }
 
             _dbContext.Comments.Remove(entity);
@@ -77,7 +77,7 @@ namespace Services.DbServices
 
             if (comment is null)
             {
-                throw new CommentNotFoundException();  //add text??
+                throw new CommentNotFoundException();
             }
 
             return new CommentDto(comment);
@@ -120,7 +120,7 @@ namespace Services.DbServices
 
             if (entity is null)
             {
-                throw new CommentNotFoundException();  //add text??
+                throw new CommentNotFoundException();
             }
 
             entity.Content = newModel.Content;

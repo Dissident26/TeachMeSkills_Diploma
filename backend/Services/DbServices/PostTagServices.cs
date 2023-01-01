@@ -37,7 +37,7 @@ namespace Services.DbServices
 
             if (entity is null)
             {
-                throw new PostTagNotFoundException();  //add text??
+                throw new PostTagNotFoundException();
             }
 
             _dbContext.PostTags.Remove(entity);
@@ -52,7 +52,7 @@ namespace Services.DbServices
 
             if (postTag is null)
             {
-                throw new PostTagNotFoundException();  //add text??
+                throw new PostTagNotFoundException();
             }
 
             return new PostTagDto(postTag);
@@ -67,7 +67,7 @@ namespace Services.DbServices
 
             if (entity is null)
             {
-                throw new PostTagNotFoundException();  //add text??
+                throw new PostTagNotFoundException();
             }
 
             entity.PostId = newModel.PostId;

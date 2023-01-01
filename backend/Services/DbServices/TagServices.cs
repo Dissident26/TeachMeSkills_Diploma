@@ -38,7 +38,7 @@ namespace Services.DbServices
 
             if (entity is null)
             {
-                throw new TagNotFoundException();  //add text??
+                throw new TagNotFoundException();
             }
 
             _dbContext.Tags.Remove(entity);
@@ -53,7 +53,7 @@ namespace Services.DbServices
 
             if (tag is null)
             {
-                throw new TagNotFoundException();  //add text??
+                throw new TagNotFoundException();
             }
 
             return new TagDto(tag);
@@ -70,7 +70,7 @@ namespace Services.DbServices
 
             if (entity is null)
             {
-                throw new TagNotFoundException();  //add text??
+                throw new TagNotFoundException();
             }
 
             entity.Name = newModel.Name;

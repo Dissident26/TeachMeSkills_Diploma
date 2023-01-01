@@ -2,11 +2,7 @@
 {
     public class CommentNotFoundException : Exception
     {
-        public CommentNotFoundException()
-        {
-        }
-
-        public CommentNotFoundException(string message) : base(message)
+        public CommentNotFoundException(string message = ExceptionMessages.CommentNotFound) : base(message)
         {
         }
 

@@ -1,6 +1,5 @@
 ﻿using Bogus;
 using DataBaseSeeder.Interfaces;
-using Models.Entities;
 using Services.Dtos;
 namespace DataBaseSeeder.Fakers
 {

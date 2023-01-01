@@ -25,7 +25,7 @@ namespace Services.DbServices
 
             if (entity is null)
             {
-                throw new UserNotFoundException();  //add text??
+                throw new UserNotFoundException();
             }
 
             entity.Name = newModel.Name;
@@ -39,7 +39,7 @@ namespace Services.DbServices
 
             if (entity is null)
             {
-                throw new UserNotFoundException();  //add text??
+                throw new UserNotFoundException();
             }
 
             _dbContext.AuthorisedUsers.Remove(entity);
@@ -54,7 +54,7 @@ namespace Services.DbServices
 
             if(entity is null)
             {
-                throw new InvalidCredentialsException(); // add text?
+                throw new InvalidCredentialsException();
             }
 
             var user = await _dbContext.Users
@@ -63,7 +63,7 @@ namespace Services.DbServices
 
             if (user is null)
             {
-                throw new UserNotFoundException(); // add text?
+                throw new UserNotFoundException();
             }
 
             return new UserDto(user);

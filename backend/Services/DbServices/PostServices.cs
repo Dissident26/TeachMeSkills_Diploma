@@ -47,7 +47,7 @@ namespace Services.DbServices
 
             if (entity is null)
             {
-                throw new PostNotFoundException();  //add text??
+                throw new PostNotFoundException();
             }
 
             await _dbContext.SaveChangesAsync();
@@ -68,7 +68,7 @@ namespace Services.DbServices
 
             if (post is null)
             {
-                throw new PostNotFoundException();  //add text??
+                throw new PostNotFoundException();
             }
 
             return post;
@@ -89,7 +89,7 @@ namespace Services.DbServices
 
             if (entity is null)
             {
-                throw new PostNotFoundException();  //add text??
+                throw new PostNotFoundException();
             }
 
             entity.Content = newModel.Content;
