@@ -25,7 +25,7 @@ namespace WebApi.Controllers
         public async Task<string> SignIn(UserAuthModelDto userAuthModel)
         {
             var user = await _authServices.ValidateUser(userAuthModel);
-            List<Claim> claims = new() { new Claim(AuthConstants.ClaimType, user.Id.ToString()) };//???
+            List<Claim> claims = new() { new Claim(AuthConstants.ClaimType, user.Id.ToString()) };
             var token = JwtToken.GetToken(claims);
             var encodedToken = new JwtSecurityTokenHandler().WriteToken(token);
 

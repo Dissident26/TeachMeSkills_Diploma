@@ -11,6 +11,7 @@ import {
 } from "../components";
 import { routes } from "./routes";
 import { authRoutes } from ".";
+import { PostWithPagination } from "../components/post/post-with-pagination";
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
       {
         path: routes.root,
         element: <AllPosts />,
+      },
+      {
+        path: routes.post.getByPage,
+        element: <PostWithPagination />,
       },
       {
         path: routes.post.get,

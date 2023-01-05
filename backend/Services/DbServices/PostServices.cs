@@ -110,5 +110,73 @@ namespace Services.DbServices
                     Tags = post.Tags.Select(tag => new TagDto(tag)).ToList()
                 }).ToListAsync();
         }
+        public async Task<PostPageDto> GetListPage(int page)
+        {
+            var pageSize = 10;
+            var postsCount = await _dbContext.Posts.CountAsync();
+            var pagesCount = (int)Math.Ceiling(postsCount / (double)pageSize);
+            var validPage = page < 1
+                ? 1
+                : page > pagesCount 
+                    ? pagesCount 
+                    : page;
+
+            int skip = 0;
+
+            if (validPage > 1 && validPage < pagesCount)
+            {
+                skip = postsCount - (validPage - 1) * pageSize;
+            } else if (validPage == pagesCount)
+            {
+                skip = postsCount - pageSize;
+            }
+
+            var posts = await _dbContext.Posts
+                .AsNoTracking()
+                .Skip(skip)
+                .Take(pageSize)
+                .OrderByDescending(post => post.CreationDate)
+                .Select(post => new PostDto(post)
+                {
+                    User = new UserDto(post.User),
+                    CommentsCount = post.Comments.Count(),
+                    Tags = post.Tags.Select(tag => new TagDto(tag)).ToList()
+                })
+                .ToListAsync();
+
+            return new PostPageDto
+            {
+                Pages = pagesCount,
+                Current = pagesCount,
+                Posts = posts,
+            };
+        }
+        public async Task<PostPageDto> GetLatest()
+        {
+            var pageSize = 10;
+
+            var postsCount = await _dbContext.Posts.CountAsync();
+            var pagesCount = (int)Math.Ceiling(postsCount / (double)pageSize);
+            
+            var posts = await _dbContext.Posts
+                .AsNoTracking()
+                .Skip(postsCount - pageSize)
+                .Take(pageSize)
+                .OrderByDescending(post => post.CreationDate)
+                .Select(post => new PostDto(post)
+                {
+                    User = new UserDto(post.User),
+                    CommentsCount = post.Comments.Count(),
+                    Tags = post.Tags.Select(tag => new TagDto(tag)).ToList()
+                })
+                .ToListAsync();
+
+            return new PostPageDto
+            {
+                Pages = pagesCount,
+                Current = pagesCount,
+                Posts = posts,
+            };
+        }
     }
 }

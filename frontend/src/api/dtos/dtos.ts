@@ -24,6 +24,11 @@ export interface PostDto {
 }
 export type PostListDto = PostDto[];
 
+export interface PostPageDto {
+  pages: number;
+  current: number;
+  posts: PostListDto;
+}
 export interface CommentDto {
   id: number;
   postId: number;

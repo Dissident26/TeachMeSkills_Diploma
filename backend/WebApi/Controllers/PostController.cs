@@ -58,6 +58,17 @@ namespace WebApi
         {
             return await _postServices.GetPostsByTagId(id);
         }
-        
+        [HttpGet]
+        [Route("[controller]/page/{page}")]
+        public async Task<PostPageDto> GetListPage(int page)
+        {
+            return await _postServices.GetListPage(page);
+        }
+        [HttpGet]
+        [Route("[controller]/new")]
+        public async Task<PostPageDto> GetLatest()
+        {
+            return await _postServices.GetLatest();
+        }
     }
 }
