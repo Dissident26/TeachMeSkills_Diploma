@@ -7,6 +7,8 @@ import { useComments } from "./use-comments";
 import { generatePath } from "react-router-dom";
 import { routes } from "../../routes";
 
+import styles from "./styles.module.scss";
+
 interface CommentsSectionProps {
   post?: PostDto;
 }
@@ -36,23 +38,25 @@ export const CommentsSection = ({ post }: CommentsSectionProps) => {
   }
 
   return (
-    <div>
-      <CommentButton
-        isCommentsVisible={isCommentsVisible}
-        commentsCount={post?.commentsCount}
-        onClick={handleCLick}
-      />
-      <Link to={pathToPost}>link</Link>
-      <DateSection date={post?.creationDate} />
+    <>
+      <div className={styles.buttonSection}>
+        <CommentButton
+          isCommentsVisible={isCommentsVisible}
+          commentsCount={post?.commentsCount}
+          onClick={handleCLick}
+        />
+        <Link to={pathToPost}>link</Link>
+        <DateSection date={post?.creationDate} />
+      </div>
       {isCommentsVisible && (
-        <div>
+        <>
           {comments}
           <ReplyPostForm
             comment={{ postId: post?.id } as CommentDto}
             refetchComments={refetchComments}
           />
-        </div>
+        </>
       )}
-    </div>
+    </>
   );
 };

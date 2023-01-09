@@ -20,7 +20,7 @@ export const ToolBar = () => {
         {user ? (
           <>
             <Link to={routes.post.new}>New Post</Link>
-            <div>Hello{<Link to={pathToUser}>{user.name}</Link>}</div>
+            <div>Hello {<Link to={pathToUser}>{user.name}</Link>}</div>
             <Link to={routes.auth.signOut}>Sign out</Link>
           </>
         ) : (

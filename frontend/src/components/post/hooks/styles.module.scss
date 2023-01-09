@@ -1,3 +1,25 @@
 .selected {
+    padding: 5px 10px;
+    border-radius: 25px;
+    font-weight: bold;
+    border: 0;
+    box-shadow: 0 0 3px 3px red;
+    cursor: pointer;
     background-color: red;
+    color: white;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin: 10px;
+}
+
+.dots {
+    padding: 5px 10px;
+    border-radius: 25px;
+    font-weight: bold;
+    box-shadow: 0 0 3px 3px #f5f5f5;
+    background: #f5f5f5;
 }

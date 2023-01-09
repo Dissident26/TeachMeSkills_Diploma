@@ -121,12 +121,9 @@ namespace Services.DbServices
                     ? pagesCount 
                     : page;
 
-            int skip = 0;
+            int skip = (validPage - 1) * pageSize;
 
-            if (validPage > 1 && validPage < pagesCount)
-            {
-                skip = postsCount - (validPage - 1) * pageSize;
-            } else if (validPage == pagesCount)
+            if (validPage == pagesCount)
             {
                 skip = postsCount - pageSize;
             }
@@ -142,7 +139,7 @@ namespace Services.DbServices
                     CommentsCount = post.Comments.Count(),
                     Tags = post.Tags.Select(tag => new TagDto(tag)).ToList()
                 })
-                .ToListAsync();
+                .ToListAsync(); 
 
             return new PostPageDto
             {

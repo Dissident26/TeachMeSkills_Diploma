@@ -6,11 +6,6 @@ type SubmitButtonProps = InputHTMLAttributes<HTMLInputElement>;
 
 export const SubmitButton = (props: SubmitButtonProps) => {
   return (
-    <input
-      type="submit"
-      value="Submit" //add separate file with text strings
-      className={styles.submit}
-      {...props}
-    />
+    <input type="submit" value="Submit" className={styles.submit} {...props} />
   );
 };

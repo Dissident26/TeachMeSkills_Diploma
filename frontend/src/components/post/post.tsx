@@ -14,12 +14,10 @@ interface PostProps {
 export const Post: FunctionComponent<PostProps> = ({ post }: PostProps) => {
   return (
     <div className={styles.container}>
-      <div key={post.id}>
-        <UserSection user={post.user} />
-        <TagSection tags={post?.tags} />
-        <p>{post.content}</p>
-        <CommentsSection post={post} />
-      </div>
+      <UserSection user={post.user} />
+      <TagSection tags={post?.tags} />
+      <p>{post.content}</p>
+      <CommentsSection post={post} />
     </div>
   );
 };

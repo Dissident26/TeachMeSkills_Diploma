@@ -1,8 +1,10 @@
 import React, { useMemo } from "react";
 import { generatePath, useNavigate } from "react-router-dom";
+import { Button } from "../..";
 import { routes } from "../../../routes";
 
 import styles from "./styles.module.scss";
+import { usePaginationRange } from "./use-pagination-range";
 
 export const usePostPagesNavButtons = (
   pagesCount: number,
@@ -17,33 +19,45 @@ export const usePostPagesNavButtons = (
     );
   };
 
-  const navButtons = useMemo(() => {
-    const pagesArray = Array.from(
-      { length: pagesCount },
-      (_, i) => i + 1
-    ).reverse();
+  const paginationRange = usePaginationRange({
+    totalPageCount: pagesCount,
+    currentPage: currentPage,
+  });
 
-    return pagesArray.map((i) => (
-      <button
-        key={i}
-        className={i === currentPage ? styles.selected : undefined}
-        onClick={() => navigateToPath(i)}
-      >
-        {i}
-      </button>
-    ));
+  const navButtons = useMemo(() => {
+    const pagesArray = paginationRange?.reverse();
+
+    return pagesArray?.map((i: number) => {
+      if (!i) {
+        return (
+          <span key={i} className={styles.dots}>
+            ...
+          </span>
+        );
+      }
+
+      return (
+        <Button
+          key={i}
+          className={i === currentPage ? styles.selected : undefined}
+          onClick={() => navigateToPath(i)}
+          value={i.toString()}
+        />
+      );
+    });
   }, [currentPage, pagesCount]);
 
   return (
-    <div>
+    <div className={styles.container}>
       {currentPage > 1 && (
-        <button onClick={() => navigateToPath(currentPage - 1)}>next</button>
+        <Button
+          onClick={() => navigateToPath(currentPage - 1)}
+          value="previous"
+        />
       )}
       {navButtons}
       {currentPage < pagesCount && (
-        <button onClick={() => navigateToPath(currentPage + 1)}>
-          previous
-        </button>
+        <Button onClick={() => navigateToPath(currentPage + 1)} value="next" />
       )}
     </div>
   );

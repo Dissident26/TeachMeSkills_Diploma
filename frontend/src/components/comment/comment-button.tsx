@@ -1,5 +1,7 @@
 import React from "react";
 
+import { Button } from "..";
+
 interface CommentsButtonProps {
   isCommentsVisible: boolean;
   commentsCount: number;
@@ -11,11 +13,12 @@ export const CommentButton = ({
   commentsCount,
   onClick,
 }: CommentsButtonProps) => {
-  const buttonMessage = isCommentsVisible ? "Hide" : "Show"; //make separate file for all strings
-  //add styling & i classname lib
+  const buttonMessage = isCommentsVisible ? "Hide" : "Show";
+
   return (
-    <button
+    <Button
+      value={`${buttonMessage} comments (${commentsCount})`}
       onClick={onClick}
-    >{`${buttonMessage} comments (${commentsCount})`}</button>
+    />
   );
 };

@@ -1,9 +1,9 @@
 import React, { ReactNode, useCallback } from "react";
 import { CommentDto, UserDto } from "../../api";
-import { UserSection, DateSection, ReplyCommentForm } from "..";
+import { UserSection, DateSection, ReplyCommentForm, Button } from "..";
+import { useUserProvider } from "../../contexts";
 
 import styles from "./styles.module.scss";
-import { useUserProvider } from "../../contexts";
 
 interface CommentProps {
   comment: CommentDto;
@@ -40,7 +40,7 @@ export const Comment = ({
           <UserSection user={user} avatarSize={AVATAR_SIZE} />
           <DateSection date={comment?.creationDate} />
           {isReplySectionAvailable && (
-            <button onClick={setIsReplyVisible}>Reply</button>
+            <Button onClick={setIsReplyVisible} value={"Reply"} />
           )}
         </div>
         {isReplyVisible && (
