@@ -6,6 +6,7 @@
 
 .content {
     padding: 0 10px;
+    overflow-wrap: break-word;
 }
 
 .childrenContainer {
@@ -22,4 +23,10 @@
 .buttonSection {
     display: flex;
     justify-content: space-between;
+}
+
+.textArea {
+    width: 100%;
+    min-height: 200px;
+    resize: none;
 }

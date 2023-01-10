@@ -62,7 +62,8 @@ namespace WebApi
         }
         [HttpPut]
         [Route(RouteConstants.Update)]
-        public async Task<CommentDto> UpdateComment([FromBody] CommentDto comment)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<CommentDto> UpdateComment(CommentDto comment)
         {
             return await _commentServices.Update(comment);
         }
