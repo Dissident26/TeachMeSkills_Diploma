@@ -9,19 +9,31 @@ export const useComments = (
   refetchComments?: () => void
 ) => {
   const [selectedCommentId, setSelectedCommentId] = useState<number>(null);
+  const [editedCommentId, setEditedCommentId] = useState<number>(null);
 
-  const handleClick = (id: number) => {
-    setSelectedCommentId(!selectedCommentId ? id : null);
+  const handleSelectComment = (id: number) => {
+    const commentId = selectedCommentId === id ? null : id;
+    setSelectedCommentId(commentId);
+    setEditedCommentId(null);
+  };
+  const handleEditComment = (id: number) => {
+    const commentId = editedCommentId === id ? null : id;
+    setEditedCommentId(commentId);
+    setSelectedCommentId(null);
   };
 
   const addRepliedComments = (comment: CommentDto) => {
     const isReplyVisible = selectedCommentId === comment.id;
+    const isEditing = editedCommentId === comment.id;
+
     const props = {
       key: comment.id,
       user: comment.user,
       comment,
       isReplyVisible,
-      setIsReplyVisible: () => handleClick(comment.id),
+      setIsReplyVisible: () => handleSelectComment(comment.id),
+      isEditing,
+      setIsEditing: () => handleEditComment(comment.id),
       refetchComments,
     };
 
@@ -38,7 +50,7 @@ export const useComments = (
 
   const commentsWithReplies = useMemo(
     () => comments?.map((comment) => addRepliedComments(comment)),
-    [comments, selectedCommentId]
+    [comments, selectedCommentId, editedCommentId]
   );
 
   return {

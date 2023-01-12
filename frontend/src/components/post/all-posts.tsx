@@ -1,11 +1,13 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 import { useGetPostsList, PostDto } from "../../api";
 import { Spinner } from "../spinner";
+import { usePostPagesNavButtons } from "./hooks";
 import { Post } from "./post";
 
 export const AllPosts = () => {
-  const { isLoading: isPostsLoading, data: posts } = useGetPostsList();
+  const { isLoading: isPostsLoading, data } = useGetPostsList();
+  const pageNavButtons = usePostPagesNavButtons(data?.pages);
 
   if (isPostsLoading) {
     return <Spinner />;
@@ -13,9 +15,10 @@ export const AllPosts = () => {
 
   return (
     <>
-      {posts?.map((post: PostDto) => (
-        <Post key={post.id} post={post} />
+      {data?.posts.map((post: PostDto) => (
+        <Post post={post} key={post.id} />
       ))}
+      {pageNavButtons}
     </>
   );
 };

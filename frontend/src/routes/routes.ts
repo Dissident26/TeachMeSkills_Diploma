@@ -12,5 +12,6 @@ export const routes = {
     get: "/post/:id",
     byTag: "/post/tag/:id",
     new: "post/new",
+    getByPage: "/post/page/:page",
   },
 };

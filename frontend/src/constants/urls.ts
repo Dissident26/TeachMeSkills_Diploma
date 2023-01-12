@@ -12,6 +12,8 @@ export const urls = {
     getList: `${BASE_URLS.POST}/list`,
     getPostListByTag: `${BASE_URLS.POST}/getPostListByTag`,
     create: `${BASE_URLS.POST}/add`,
+    new: `${BASE_URLS.POST}/new`,
+    getByPage: `${BASE_URLS.POST}/page`,
   },
   user: {
     get: `${BASE_URLS.USER}`,
@@ -21,6 +23,7 @@ export const urls = {
     getListByPostId: `${BASE_URLS.COMMENT}/getById`,
     createPostComment: `${BASE_URLS.COMMENT}/add`,
     createRepliedComment: `${BASE_URLS.COMMENT}/addReply`,
+    updateComment: `${BASE_URLS.COMMENT}/update`,
   },
   authorization: {
     signIn: `${BASE_URLS.AUTH}/singIn`,

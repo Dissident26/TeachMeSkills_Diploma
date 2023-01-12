@@ -1,15 +1,18 @@
 import React, { ReactNode, useCallback } from "react";
 import { CommentDto, UserDto } from "../../api";
-import { UserSection, DateSection, ReplyCommentForm } from "..";
+import { UserSection, DateSection, ReplyCommentForm, Button } from "..";
+import { useUserProvider } from "../../contexts";
 
 import styles from "./styles.module.scss";
-import { useUserProvider } from "../../contexts";
+import { EditCommentForm } from "./edit-comment-form";
 
 interface CommentProps {
   comment: CommentDto;
   user?: UserDto;
   isReplyVisible: boolean;
   setIsReplyVisible: () => void;
+  isEditing: boolean;
+  setIsEditing: () => void;
   refetchComments?: () => void;
   children?: ReactNode;
 }
@@ -21,26 +24,39 @@ export const Comment = ({
   user,
   isReplyVisible,
   setIsReplyVisible,
+  isEditing,
+  setIsEditing,
   refetchComments,
   children,
 }: CommentProps) => {
   const handleSubmit = useCallback(() => {
     refetchComments?.();
     setIsReplyVisible();
-  }, [setIsReplyVisible, refetchComments]);
+    setIsEditing();
+  }, [setIsReplyVisible, refetchComments, setIsEditing]);
 
   const { user: authUser } = useUserProvider();
-  const isReplySectionAvailable = !!authUser;
+  const isUserActionsAvailable = !!authUser;
+  const isEditAvailable = authUser.id === comment.userId;
 
   return (
     <>
       <div className={styles.container}>
-        <div className={styles.content}>{comment?.content}</div>
+        {isEditing ? (
+          <EditCommentForm comment={comment} onSuccess={handleSubmit} />
+        ) : (
+          <p className={styles.content}>{comment?.content}</p>
+        )}
         <div className={styles.info}>
           <UserSection user={user} avatarSize={AVATAR_SIZE} />
           <DateSection date={comment?.creationDate} />
-          {isReplySectionAvailable && (
-            <button onClick={setIsReplyVisible}>Reply</button>
+          {isUserActionsAvailable && (
+            <>
+              {isEditAvailable && (
+                <Button onClick={setIsEditing} value={"Edit"} />
+              )}
+              <Button onClick={setIsReplyVisible} value={"Reply"} />
+            </>
           )}
         </div>
         {isReplyVisible && (

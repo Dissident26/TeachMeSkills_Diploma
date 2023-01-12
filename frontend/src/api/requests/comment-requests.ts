@@ -29,3 +29,11 @@ export const createRepliedComment = async (
 
   return response.data;
 };
+
+export const updateComment = async (data: CommentDto): Promise<CommentDto> => {
+  const response = await api.put(`${urls.comment.updateComment}`, {
+    ...data,
+  });
+
+  return response.data;
+};

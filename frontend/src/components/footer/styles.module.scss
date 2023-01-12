@@ -1,7 +1,5 @@
 .container {
-    border: 1px solid black;
-}
-
-.content {
-    border: 1px dotted black;
+    display: flex;
+    justify-content: center;
+    padding: 5px;
 }

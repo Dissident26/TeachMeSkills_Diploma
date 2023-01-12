@@ -116,7 +116,9 @@ namespace Services.DbServices
         }
         public async Task<CommentDto> Update(CommentDto newModel)
         {
-            var entity = await _dbContext.Comments.SingleOrDefaultAsync(entity => entity.Id == newModel.Id);
+            var entity = await _dbContext.Comments
+                .Where(comment => comment.Id == newModel.Id)
+                .SingleOrDefaultAsync();
 
             if (entity is null)
             {
@@ -127,7 +129,7 @@ namespace Services.DbServices
 
             await _dbContext.SaveChangesAsync();
 
-            return new CommentDto(entity);
+            return new CommentDto();     // think about return type
         }
     }
 }
