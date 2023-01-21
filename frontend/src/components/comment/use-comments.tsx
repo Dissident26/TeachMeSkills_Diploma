@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 
 import { CommentListDto, CommentDto } from "../../api";
 
@@ -11,16 +11,28 @@ export const useComments = (
   const [selectedCommentId, setSelectedCommentId] = useState<number>(null);
   const [editedCommentId, setEditedCommentId] = useState<number>(null);
 
-  const handleSelectComment = (id: number) => {
-    const commentId = selectedCommentId === id ? null : id;
-    setSelectedCommentId(commentId);
-    setEditedCommentId(null);
-  };
-  const handleEditComment = (id: number) => {
-    const commentId = editedCommentId === id ? null : id;
-    setEditedCommentId(commentId);
+  const handleSelectComment = useCallback(
+    (id?: number) => {
+      const commentId = selectedCommentId === id ? null : id;
+      setSelectedCommentId(commentId);
+      setEditedCommentId(null);
+    },
+    [setSelectedCommentId, setEditedCommentId]
+  );
+
+  const handleEditComment = useCallback(
+    (id?: number) => {
+      const commentId = editedCommentId === id ? null : id;
+      setSelectedCommentId(null);
+      setEditedCommentId(commentId);
+    },
+    [setSelectedCommentId, setEditedCommentId]
+  );
+
+  const handleResetState = useCallback(() => {
     setSelectedCommentId(null);
-  };
+    setEditedCommentId(null);
+  }, [setSelectedCommentId, setEditedCommentId]);
 
   const addRepliedComments = (comment: CommentDto) => {
     const isReplyVisible = selectedCommentId === comment.id;
@@ -35,6 +47,7 @@ export const useComments = (
       isEditing,
       setIsEditing: () => handleEditComment(comment.id),
       refetchComments,
+      handleResetState,
     };
 
     if (!comment?.repliedComments) {

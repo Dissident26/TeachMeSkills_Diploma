@@ -21,7 +21,7 @@ namespace Services.Dtos
             User = new UserDto(entity.User);
             Content = entity.Content;
             CreationDate = entity.CreationDate;
-            RepliedComments = entity?.Replies.Select(c => new CommentDto(c)).ToList();
+            RepliedComments = entity.Replies?.Select(c => new CommentDto(c)).ToList();
         }
         public Comment MapToEntity()
         {

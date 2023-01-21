@@ -13,6 +13,7 @@ interface CommentProps {
   setIsReplyVisible: () => void;
   isEditing: boolean;
   setIsEditing: () => void;
+  handleResetState: () => void;
   refetchComments?: () => void;
   children?: ReactNode;
 }
@@ -27,12 +28,12 @@ export const Comment = ({
   isEditing,
   setIsEditing,
   refetchComments,
+  handleResetState,
   children,
 }: CommentProps) => {
   const handleSubmit = useCallback(() => {
     refetchComments?.();
-    setIsReplyVisible();
-    setIsEditing();
+    handleResetState();
   }, [setIsReplyVisible, refetchComments, setIsEditing]);
 
   const { user: authUser } = useUserProvider();

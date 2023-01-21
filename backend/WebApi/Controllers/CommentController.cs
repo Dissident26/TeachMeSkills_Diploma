@@ -12,11 +12,9 @@ namespace WebApi
     public class CommentController : ControllerBase
     {
         private readonly ICommentServices _commentServices;
-        private readonly IRepliedCommentServices _repliedCommentServices;
         public CommentController(ICommentServices commentServices, IRepliedCommentServices repliedCommentServices)
         {
             _commentServices = commentServices;
-            _repliedCommentServices = repliedCommentServices;
         }
         [HttpGet]
         [Route(RouteConstants.Get)]
